@@ -20,3 +20,15 @@ And Way more!
 Access:
 
 + Visit FemboyLax in kiddions external menu by placing it inside the scripts folder.
+
+
+Changelog:
++ Added off radar Toggle
++ Added unlock secret Awards
++ Added vehicle spawner (credits to SCAAPPS)
++ Added Auto session switch on changing rank
++ Added more money transactions
++ Added big map toggle
++ Fixed Add/Remove bad sports
++ Fixed Media stick unlocker
++ Optimized Snow Add/remover
