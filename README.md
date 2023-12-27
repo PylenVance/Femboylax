@@ -3,6 +3,9 @@ FemboyLax GTA 5 Tools Sub-Menu
 
 New sub menu thats ready to be used with the latest (3095) version of gta 5 ONLINE
 
+Minor changelog:
+
++ added more tp locations
 Feature Highlights:
 
 + Enhanced Movement: Unlock fast run and reload for swift gameplay.
