@@ -7,10 +7,13 @@ local TRIGGER_HASH = 0x615762F1
 local maxSnackAmount = 6969
 local MobileRadio = false
 local SnowyWorld = false
-local FemboylaxVERS = "V1.2"
+local FemboylaxVERS = "V1.3"
 PiD = stats.get_int("MPPLY_LAST_MP_CHAR") mpx = PiD if PiD == 0 then mpx = "MP0_" else mpx = "MP1_" end 
 
- function MPx()
+local IsMale 
+local IsFemale
+
+function MPx()
 	return "MP"..stats.get_int("MPPLY_LAST_MP_CHAR").."_"
 end
 function TriggerTransaction(hash, amount)
@@ -29,14 +32,37 @@ function CheckIfPlrExists()
 end
 
 --Changelog:
--- Added Remove salvage yard mission cost
--- Added salvage yard car custom values
--- Added unlocker for Ecola/Sprite vehicle plates
--- Added Raining vehicles 
--- Added skydive feature in player
--- Added Skydive feature in vehicles
--- Added more cars in spawner
 
+--Menu's:
+    --Added teleport menu
+
+--Features:
+    -- Added God mode feature
+    -- Added Circle cars feature
+    -- Added Circle peds feature
+    -- Added Gender swapping feature
+    -- Added Rain npc feature
+    -- Added Save position feature
+    -- Added Vehicle godmode feature
+    -- Added Kill all vehicles feature
+    -- Added NightVision feature
+    -- Added Passive mode feature
+    -- Added tiny player feature
+    -- Added Unlock All parachutes
+    -- Added Unlock LSC Engine upgrades
+    -- Added more tattoo's in recovery
+    -- Added suicide feature
+    -- Added more unlocks
+    -- Added Heal feature
+    -- Added way more shit just look
+--Fixes
+    -- Fixed Unlock recovery
+
+function rn()
+	local rnndd = math.random(1,60)
+	return rnndd
+end
+ 
 --Car spawner by SCAAPPS
 --Link https://github.com/PylenVance/Femboylax/issues/4
 
@@ -435,6 +461,418 @@ function UnlockALL()
 		stats.set_bool('MPX_AWD_DIRECTOR', true)
 		stats.set_int('MPX_AWD_SHARPSHOOTER', 40)
 		stats.set_int('MPX_AWD_RACECHAMP', 40)
+
+
+	  stats.set_int(MPx()..'AWD_BATSWORD', 1000000)
+		stats.set_int(MPx()..'AWD_COINPURSE', 950000)
+		stats.set_int(MPx()..'AWD_ASTROCHIMP', 3000000)
+		stats.set_int(MPx()..'AWD_MASTERFUL', 40000)
+		stats.set_int(MPx()..'SCGW_NUM_WINS_GANG_0', 55)
+		stats.set_int(MPx()..'SCGW_NUM_WINS_GANG_1', 56)
+		stats.set_int(MPx()..'SCGW_NUM_WINS_GANG_2', 57)
+		stats.set_int(MPx()..'SCGW_NUM_WINS_GANG_3', 58)
+		stats.set_int(MPx()..'IAP_MAX_MOON_DIST', 2147483647)
+		stats.set_int(MPx()..'LAST_ANIMAL', 108)
+		stats.set_int(MPx()..'CH_ARC_CAB_CLAW_TROPHY', -1)
+		stats.set_int(MPx()..'CH_ARC_CAB_LOVE_TROPHY', -1)
+		stats.set_int(MPx()..'AWD_FACES_OF_DEATH', 50)
+		stats.set_int(MPx()..'REV_NV_KILLS', 50)
+		stats.set_int(MPx().."XM22_FLOW", -1)
+		stats.set_int(MPx().."XM22_MISSIONS", -1)
+		stats.set_bool(MPx().."AWD_DOGS_BEST_FRIEND", true)
+		stats.set_int(MPx().."H3_VEHICLESUSED", -1)
+		stats.set_int(MPx().."H4_H4_DJ_MISSIONS", -1)
+		stats.set_int(MPx().."H4_PROGRESS", -1)
+		stats.set_int(MPx().."TUNER_GEN_BS", -1)
+		stats.set_int(MPx().."FIXER_HQ_OWNED", 1)
+		stats.set_int(MPx().."ULP_MISSION_PROGRESS", -1)
+		stats.set_int(MPx().."SUM23_AVOP_PROGRESS", -1)
+		stats.set_int(MPx().."GANGOPS_FLOW_BITSET_MISS0", -1)
+		stats.set_bool(MPx().."AWD_TAXISTAR", true)
+		stats.set_bool("MPPLY_AWD_HST_ORDER", true)
+		stats.set_bool("MPPLY_AWD_HST_SAME_TEAM", true)
+		stats.set_bool("MPPLY_AWD_HST_ULT_CHAL", true)
+		stats.set_int("MPPLY_HEISTFLOWORDERPROGRESS", -1)
+		stats.set_int("MPPLY_HEISTNODEATHPROGREITSET", -1)
+		stats.set_int("MPPLY_HEISTTEAMPROGRESSBITSET", -1)
+		stats.set_int(MPx().."AT_FLOW_VEHICLE_BS", -1)
+		stats.set_int(MPx().."LFETIME_HANGAR_BUY_COMPLET", 50)
+		stats.set_int(MPx().."SALV23_GEN_BS", -1)
+		stats.set_int(MPx().."SALV23_INST_PROG", -1)
+		stats.set_int(MPx().."SALV23_SCOPE_BS", -1)
+		stats.set_int(MPx().."MOST_TIME_ON_3_PLUS_STARS", 300000)
+        stats.set_int(MPx().."LOWRIDER_FLOW_COMPLETE", 1)
+        stats.set_int(MPx().."AT_FLOW_MISSION_PROGRESS", 50)
+        stats.set_int(MPx().."AT_FLOW_IMPEXP_NUM", 50)
+        stats.set_int(MPx().."AT_FLOW_BITSET_MISSIONS0", -1)
+        stats.set_int(MPx().."WVM_FLOW_MISSION_PROGRESS", 50)
+        stats.set_int(MPx().."WVM_FLOW_IMPEXP_NUM", 50)
+        stats.set_int(MPx().."WVM_FLOW_BITSET_MISSIONS0", -1)
+        stats.set_int(MPx().."WVM_FLOW_VEHICLE_BS", -1)
+        stats.set_int(MPx().."GANGOPS_FLOW_MISSION_PROG", -1)
+        stats.set_int(MPx().."GANGOPS_FLOW_IMPEXP_NUM", 50)
+        stats.set_int(MPx().."WAM_FLOW_VEHICLE_BS", -1)
+        stats.set_int(MPx().."GANGOPS_FLOW_PASSED_BITSET", -1)
+        stats.set_int(MPx().."VCM_FLOW_PROGRESS", -1)
+        stats.set_int(MPx().."TUNER_FLOW_BS", -1)
+        stats.set_int(MPx().."TUNER_MIS_BS", -1)
+        stats.set_int(MPx().."TUNER_COMP_BS", -1)
+        stats.set_int(MPx().."GANGOPS_FM_MISSION_PROG", -1)
+        stats.set_int(MPx().."GANGOPS_FM_BITSET_MISS0", -1)
+        stats.set_bool(MPx().."UNLOCKED_MESSAGE_FLEECA", true)
+        stats.set_bool(MPx().."CARMEET_PV_CHLLGE_CMPLT", true)
+        stats.set_int(MPx().."LIFETIME_BUY_COMPLETE", 1025)
+        stats.set_int(MPx().."LIFETIME_BUY_UNDERTAKEN", 1025)
+        stats.set_int(MPx().."LIFETIME_SELL_COMPLETE", 1025)
+        stats.set_int(MPx().."LIFETIME_SELL_UNDERTAKEN", 1025)
+        stats.set_int(MPx().."LIFETIME_CONTRA_EARNINGS", 25000000) --Contraband Earnings
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET1", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA1", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET1", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA1", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET2", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA2", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET2", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA2", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET3", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA3", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET3", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA3", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET4", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA4", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET4", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA4", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET5", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_UNDERTA5", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET5", 1025)
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_UNDERTA5", 1025)
+        stats.set_int(MPx().."LIFETIME_BKR_SELL_EARNINGS0", 25000000)
+        stats.set_int(MPx().."LIFETIME_BKR_SELL_EARNINGS1", 25000000)
+        stats.set_int(MPx().."LIFETIME_BKR_SELL_EARNINGS2", 25000000)
+        stats.set_int(MPx().."LIFETIME_BKR_SELL_EARNINGS3", 25000000)
+        stats.set_int(MPx().."LIFETIME_BKR_SELL_EARNINGS4", 25000000)
+        stats.set_int(MPx().."LFETIME_BIKER_BUY_COMPLET6", 10) 
+        stats.set_int(MPx().."LFETIME_BIKER_SELL_COMPLET6", 10) 
+        stats.set_int('MPPLY_CREW_NO_HEISTS_0', 2)
+        stats.set_int('MPPLY_CREW_NO_HEISTS_1', 5)
+        stats.set_int('MPPLY_CREW_NO_HEISTS_2', 5)
+        stats.set_int('MPPLY_CREW_NO_HEISTS_3', 5)
+        stats.set_int('MPPLY_CREW_NO_HEISTS_4', 5)
+        stats.set_int('MPPLY_GANGOPS_LOYALTY2', -1)
+        stats.set_int('MPPLY_GANGOPS_LOYALTY3', -1)
+        stats.set_int('MPPLY_GANGOPS_CRIMMASMD2', -1)
+        stats.set_int('MPPLY_GANGOPS_CRIMMASMD3', -1)
+        stats.set_int('MPPLY_GANGOPS_SUPPORT', -1)
+        stats.set_int('MPPLY_GANGOPS_ALLINORDER', -1)
+        stats.set_int('MPPLY_GANGOPS_LOYALTY', -1)
+        stats.set_int('MPPLY_GANGOPS_CRIMMASMD', -1)
+        stats.set_int('MPPLY_XMASLIVERIES0', -1)
+        stats.set_int('MPPLY_XMASLIVERIES1', -1)
+        stats.set_int('MPPLY_XMASLIVERIES2', -1)
+        stats.set_int('MPPLY_XMASLIVERIES3', -1)
+        stats.set_int('MPPLY_XMASLIVERIES4', -1)
+        stats.set_int('MPPLY_XMASLIVERIES5', -1)
+        stats.set_int('MPPLY_XMASLIVERIES6', -1)
+        stats.set_int('MPPLY_XMASLIVERIES7', -1)
+        stats.set_int('MPPLY_XMASLIVERIES8', -1)
+        stats.set_int('MPPLY_XMASLIVERIES9', -1)
+        stats.set_int('MPPLY_XMASLIVERIES10', -1)
+        stats.set_int('MPPLY_XMASLIVERIES11', -1)
+        stats.set_int('MPPLY_XMASLIVERIES12', -1)
+        stats.set_int('MPPLY_XMASLIVERIES13', -1)
+        stats.set_int('MPPLY_XMASLIVERIES14', -1)
+        stats.set_int('MPPLY_XMASLIVERIES15', -1)
+        stats.set_int('MPPLY_XMASLIVERIES16', -1)
+        stats.set_int('MPPLY_XMASLIVERIES17', -1)
+        stats.set_int('MPPLY_XMASLIVERIES18', -1)
+        stats.set_int('MPPLY_XMASLIVERIES19', -1)
+        stats.set_int('MPPLY_XMASLIVERIES20', -1)
+        stats.set_int(MPx()..'HOLDUPS_BITSET', -1)
+        stats.set_int(MPx()..'CHAR_ABILITY_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_ABILITY_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_ABILITY_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_UNLOCKED', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_UNLOCKED2', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_ADDON_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_ADDON_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_ADDON_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_WEAP_ADDON_4_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_UNLOCKED', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_UNLOCKED2', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_UNLOCKED3', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_UNLOCKED4', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_UNLOCKED5', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_4_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_5_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_6_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_7_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_8_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_9_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_10_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_11_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_12_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_13_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_14_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_15_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_16_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_17_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_18_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_19_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_WEAP_ADDON_20_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_HAIRCUT_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK1', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK2', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK3', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK4', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK5', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK6', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK7', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK8', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK9', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK10', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK11', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK12', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK13', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK14', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK15', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK16', -1)
+        stats.set_int(MPx()..'CHAR_HAIR_UNLCK17', -1)
+        stats.set_int(MPx()..'CHAR_FM_HEALTH_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_HEALTH_2_UNLCK', -1)
+        stats.set_int(MPx()..'CRDEADLINE', 5)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_1_FM_EQUIP', -1)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_2_FM_EQUIP', -1)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_3_FM_EQUIP', -1)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_4_FM_EQUIP', -1)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_5_FM_EQUIP', -1)
+        stats.set_int(MPx()..'CHAR_KIT_1_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_2_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_3_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_4_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_5_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_6_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_7_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_8_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_9_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_10_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_11_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_12_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_13_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_14_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_15_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_16_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_17_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_18_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_19_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_20_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_21_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_22_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_23_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_24_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_25_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_26_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_27_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_28_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_29_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_30_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_30_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_31_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_32_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_33_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_34_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_35_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_36_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_37_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_38_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_39_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_40_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_KIT_41_FM_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_ABILITY_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_ABILITY_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_ABILITY_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_4_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_5_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_6_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_7_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_8_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_9_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_10_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CLOTHES_11_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_VEHICLE_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_VEHICLE_2_UNLCK', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_0', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_1', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_2', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_3', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_4', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_5', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_6', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_7', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_8', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_9', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_10', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_11', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_12', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_13', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_14', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_15', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_16', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_17', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_18', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_19', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_20', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_21', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_22', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_23', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_24', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_25', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_26', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_27', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_28', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_29', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_30', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_31', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_32', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_33', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_34', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_35', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_36', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_37', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_38', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_39', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_40', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_41', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_42', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_43', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_44', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_45', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_46', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_47', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_48', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_49', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_50', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_51', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_52', -1)
+        stats.set_int(MPx()..'TATTOO_FM_UNLOCKS_53', -1)
+        stats.set_int(MPx()..'RANKAP_UNLK_0', -1)
+        stats.set_int(MPx()..'RANKAP_UNLK_1', -1)
+        stats.set_int(MPx()..'RANKAP_UNLK_2', -1)
+        stats.set_int(MPx()..'RANKAP_UNLK_3', -1)
+        stats.set_int(MPx()..'CHAR_CREWUNLOCK_1_UNLCK', -1)
+        stats.set_int(MPx()..'SR_WEAPON_BIT_SET', -1)
+        stats.set_int(MPx()..'CAR_CLUB_REP', 997430)
+        stats.set_bool(MPx()..'SR_TIER_1_REWARD', true)
+        stats.set_bool(MPx()..'SR_INCREASE_THROW_CAP', true)
+        stats.set_bool(MPx()..'SR_TIER_3_REWARD', true)
+        stats.set_bool('MPPLY_MELEECHLENGECOMPLETED', true)
+        stats.set_bool('MPPLY_HEADSHOTCHLENGECOMPLETED', true)
+        stats.set_int(MPx()..'CHAR_HEIST_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_VEHICLE_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_VEHICLE_2_UNLCK', -1)
+        stats.set_int(MPx()..'CRHEIST', 50)
+        stats.set_int(MPx()..'CR_BANKHEIST1', 10)
+        stats.set_int(MPx()..'CR_COUNTHEIST1', 10)
+        stats.set_int(MPx()..'HEIST_COMPLETION', 26)
+        stats.set_int(MPx()..'HEIST_TOTAL_TIME', 86400000)
+        stats.set_int(MPx()..'HEISTS_ORGANISED', 50)
+        stats.set_int(MPx()..'RACES_WON', 345+ rn())
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_1_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_2_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_3_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_4_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_5_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_6_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_7_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_FM_PACKAGE_8_COLLECT', -1)
+        stats.set_int(MPx()..'CHAR_NO_FM_PACKAGES_COL', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_1_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_2_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_3_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_4_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_5_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_6_UNLCK', -1)
+        stats.set_int(MPx()..'CHAR_FM_CARMOD_7_UNLCK', -1)
+        stats.set_int(MPx()..'NUMBER_SLIPSTREAMS_IN_RACE', 213+ rn())
+        stats.set_int(MPx()..'NUMBER_TURBO_STARTS_IN_RACE', 200+ rn())
+        stats.set_int(MPx()..'USJS_FOUND', 50+ rn())
+        stats.set_int(MPx()..'USJS_COMPLETED', 50+ rn())
+        stats.set_int(MPx()..'MPPLY_TIMES_RACE_BEST_LAP', 300+ rn())
+        stats.set_int(MPx()..'AWD_FMRALLYWONDRIVE', 25+ rn())
+        stats.set_int(MPx()..'AWD_FMWINSEARACE', 144+ rn())
+        stats.set_int(MPx()..'AWD_FMWINAIRRACE', 76 + rn())
+        stats.set_int(MPx()..'AWD_FM_RACES_FASTEST_LAP', 201+ rn())
+        stats.set_int(MPx()..'SCRIPT_INCREASE_STAM', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_STRN', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_FLY', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_STL', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_LUNG', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_DRIV', 100)
+        stats.set_int(MPx()..'SCRIPT_INCREASE_SHO', 100)
+        stats.set_int(MPx()..'AWD_DANCE_TO_SOLOMUN', 360)
+        stats.set_int('NIGHTCLUB_HOTSPOT_TIME_MS', 3600000)
+        stats.set_int(MPx()..'CASINO_DECORATION_GIFT_1', -1);
+        stats.set_bool(MPx()..'COMPLETE_H4_F_USING_VETIR', true);
+        stats.set_bool(MPx()..'COMPLETE_H4_F_USING_LONGFIN', true);
+        stats.set_bool(MPx()..'COMPLETE_H4_F_USING_ANNIH', true);
+        stats.set_bool(MPx()..'COMPLETE_H4_F_USING_ALKONOS', true);
+        stats.set_bool(MPx()..'COMPLETE_H4_F_USING_PATROLB', true);
+        stats.set_bool(MPx()..'AWD_DEADEYE', true)
+		stats.set_bool(MPx()..'AWD_PISTOLSATDAWN', true)
+		stats.set_bool(MPx()..'AWD_TRAFFICAVOI', true)
+		stats.set_bool(MPx()..'AWD_CANTCATCHBRA', true)
+		stats.set_bool(MPx()..'AWD_WIZHARD', true)
+		stats.set_bool(MPx()..'AWD_APEESCAPE', true)
+		stats.set_bool(MPx()..'AWD_MONKEYKIND', true)
+		stats.set_bool(MPx()..'AWD_AQUAAPE', true)
+		stats.set_bool(MPx()..'AWD_KEEPFAITH', true)
+		stats.set_bool(MPx()..'AWD_TRUELOVE', true)
+		stats.set_bool(MPx()..'AWD_NEMESIS', true)
+		stats.set_bool(MPx()..'AWD_FRIENDZONED', true)
+		stats.set_bool(MPx()..'SCGW_WON_NO_DEATHS', true)
+		stats.set_bool(MPx()..'IAP_CHALLENGE_0', true)
+		stats.set_bool(MPx()..'IAP_CHALLENGE_1', true)
+		stats.set_bool(MPx()..'IAP_CHALLENGE_2', true)
+		stats.set_bool(MPx()..'IAP_CHALLENGE_3', true)
+		stats.set_bool(MPx()..'IAP_CHALLENGE_4', true)
+		stats.set_bool(MPx()..'AWD_KINGOFQUB3D', true)
+		stats.set_bool(MPx()..'AWD_QUBISM', true)
+		stats.set_bool(MPx()..'AWD_GODOFQUB3D', true)
+		stats.set_bool(MPx()..'AWD_QUIBITS', true)
+		stats.set_bool(MPx()..'AWD_ELEVENELEVEN', true)
+		stats.set_bool(MPx()..'AWD_GOFOR11TH', true)
+		stats.set_bool(MPx()..'AWD_STRAIGHT_TO_VIDEO', true)
+		stats.set_bool(MPx()..'AWD_MONKEY_C_MONKEY_DO', true)
+		stats.set_bool(MPx()..'AWD_TRAINED_TO_KILL', true)
+		stats.set_bool(MPx()..'AWD_DIRECTOR', true)
+		stats.set_int(MPx()..'AWD_SHARPSHOOTER', 40)
+		stats.set_int(MPx()..'AWD_RACECHAMP', 40)
+		
+	  stats.set_int(MPx().."AWD_DROPOFF_CAP_PACKAGES", 100)
+	  stats.set_int(MPx().."AWD_KILL_CARRIER_CAPTURE", 100)
+	  stats.set_int(MPx().."AWD_FINISH_HEISTS", 50)
+	  stats.set_int(MPx().."AWD_FINISH_HEIST_SETUP_JOB", 50)
+	  stats.set_int(MPx().."AWD_NIGHTVISION_KILLS", 100)
+	  stats.set_int(MPx().."AWD_WIN_LAST_TEAM_STANDINGS", 50)
+	  stats.set_int(MPx().."AWD_ONLY_PLAYER_ALIVE_LTS", 50)
+	  stats.set_int(MPx().."AWD_TAXIDRIVER", 100)
+		
+
+	  stats.set_int(MPx().."AWD_WIN_CAPTURES", 50)
+		
+	  for i = 1, 20 do
+			stats.set_int(MPx().. "MPPLY_XMASLIVERIES" .. (i + 100), 1)
+			stats.set_int("MPPLY_XMASLIVERIES" .. (i + 100), 1)
+	  end	
 end
 
 local function createStoreMoneyEditor(submenu, character, statName)
@@ -452,6 +890,32 @@ local function setBadsport(isBadsport)
     stats.set_float("MPPLY_OVERALL_BADSPORT", isBadsport and 60000 or 0)
     stats.set_bool("MPPLY_CHAR_IS_BADSPORT", isBadsport)
 end
+
+local function UnlockEngineUpgrades()
+    local mpCharacterID = stats.get_int("MPPLY_LAST_MP_CHAR")
+    local upgradeValue = 50
+
+    stats.set_int("MP" .. mpCharacterID .. "USJS_COMPLETED_MASK", upgradeValue)
+    stats.set_int("MP" .. mpCharacterID .. "USJS_FOUND_MASK", upgradeValue)
+    stats.set_int("MP" .. mpCharacterID .. "USJS_TOTAL_COMPLETED", upgradeValue)
+    stats.set_int("MP" .. mpCharacterID .. "USJS_COMPLETED", upgradeValue)
+    stats.set_int("MP" .. mpCharacterID .. "USJS_FOUND", upgradeValue)
+end
+
+function UnlockAllParachutes()
+    local bb = MPx()
+
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 20)  -- Sprunk Chute Bag
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 21)  -- eCola Chute Bag
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 22)  -- Halloween Chute Bag
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 23)  -- Sprunk Chute
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 24)  -- eCola Chute
+    stats.set_bool_masked(bb .. "TUNERPSTAT_BOOL1", true, 25)  -- Halloween Chute
+    stats.set_bool_masked(bb .. "DLC12022PSTAT_BOOL1", true, 63)  -- Junk Energy Drink Chute Bag
+    stats.set_bool_masked(bb .. "DLC12022PSTAT_BOOL2", true, 0)   -- Junk Energy Drink Chute
+    stats.set_bool_masked(bb .. "TUPSTAT_BOOL7", true, 50)        -- High Flyer Chute Bag
+end
+
 
 local function calculateValue(value)
     if value >= 1 and value <= 99 then
@@ -486,21 +950,69 @@ function UnlockBennyVehicleOptions()
 	  stats.set_bool(mpx .. ability, true)
 	end
 end
+
 function UnlockVehicleOptions()
-	local SetInt = stats.set_int
-	local function unlockXMASLiverys()
-		for i = 1, 20 do
-		  SetInt(mpx .. "MPPLY_XMASLIVERIES" .. (i + 100), 0)
+
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_1_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_2_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_3_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_4_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_5_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_6_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_7_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_FM_PACKAGE_8_COLLECT', -1)
+	stats.set_int(MPx()..'CHAR_NO_FM_PACKAGES_COL', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_1_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_2_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_3_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_4_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_5_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_6_UNLCK', -1)
+	stats.set_int(MPx()..'CHAR_FM_CARMOD_7_UNLCK', -1)
+	stats.set_int(MPx()..'RACES_WON', 345+ rn())
+	stats.set_int(MPx()..'NUMBER_SLIPSTREAMS_IN_RACE', 213+ rn())
+	stats.set_int(MPx()..'NUMBER_TURBO_STARTS_IN_RACE', 200+ rn())
+	stats.set_int(MPx()..'MPPLY_TIMES_RACE_BEST_LAP', 300+ rn())
+	stats.set_int(MPx()..'AWD_FMRALLYWONDRIVE', 25)
+	stats.set_int(MPx()..'AWD_FMWINSEARACE', 144)
+	stats.set_int(MPx()..'AWD_FMWINAIRRACE', 76 + rn())
+	stats.set_int(MPx()..'AWD_FM_RACES_FASTEST_LAP', 201+ rn())
+    stats.set_int(MPx()..'CHAR_FM_VEHICLE_1_UNLCK', -1)
+    stats.set_int(MPx()..'CHAR_FM_VEHICLE_2_UNLCK', -1)
+    stats.set_int(MPx()..'USJS_FOUND', 50)
+    stats.set_int(MPx()..'USJS_COMPLETED', 50)
+    stats.set_int(MPx().."AWD_WIN_CAPTURES", 50)
+			
+	  stats.set_int(MPx().."AWD_DROPOFF_CAP_PACKAGES", 100)
+	  stats.set_int(MPx().."AWD_KILL_CARRIER_CAPTURE", 100)
+	  stats.set_int(MPx().."AWD_FINISH_HEISTS", 50)
+	  stats.set_int(MPx().."AWD_FINISH_HEIST_SETUP_JOB", 50)
+	  stats.set_int(MPx().."AWD_NIGHTVISION_KILLS", 100)
+	  stats.set_int(MPx().."AWD_WIN_LAST_TEAM_STANDINGS", 50)
+	  stats.set_int(MPx().."AWD_ONLY_PLAYER_ALIVE_LTS", 50)
+	  stats.set_int(MPx().."AWD_TAXIDRIVER", 100)
+		
+	for i = 1, 20 do
+		stats.set_int(MPx().. "MPPLY_XMASLIVERIES" .. (i + 100), 1)
+		stats.set_int("MPPLY_XMASLIVERIES" .. (i + 100), 1)
+	end
+end
+function SpecialTats()
+	local function mpxx()
+		return stats.get_int("MPPLY_LAST_MP_CHAR")
+	end
+	for i = 0, 63 do
+		for z = 0, 05 do
+			stats.set_bool_masked("MP" .. mpxx() .. "_GUNTATPSTAT_BOOL" .. z, true, i, mpxx)
 		end
 	end
-	SetInt("CHAR_FM_CARMOD_1_UNLCK", -1)SetInt("CHAR_FM_CARMOD_2_UNLCK", -1)SetInt("CHAR_FM_CARMOD_3_UNLCK", -1)SetInt("CHAR_FM_CARMOD_4_UNLCK", -1)SetInt("CHAR_FM_CARMOD_5_UNLCK", -1)SetInt("CHAR_FM_CARMOD_6_UNLCK", -1)SetInt("CHAR_FM_CARMOD_7_UNLCK", -1)SetInt("CHAR_FM_VEHICLE_1_UNLCK", -1)SetInt("CHAR_FM_VEHICLE_2_UNLCK", -1)SetInt("NUMBER_TURBO_STARTS_IN_RACE", 50)SetInt("USJS_FOUND", 50)SetInt("USJS_COMPLETED", 50)SetInt("AWD_FM_RACES_FASTEST_LAP", 50)SetInt("NUMBER_SLIPSTREAMS_IN_RACE", 100)SetInt("AWD_WIN_CAPTURES", 50)SetInt("AWD_DROPOFF_CAP_PACKAGES", 100)SetInt("AWD_KILL_CARRIER_CAPTURE", 100)SetInt("AWD_FINISH_HEISTS", 50)SetInt("AWD_FINISH_HEIST_SETUP_JOB", 50)SetInt("AWD_NIGHTVISION_KILLS", 100)SetInt("AWD_WIN_LAST_TEAM_STANDINGS", 50)SetInt("AWD_ONLY_PLAYER_ALIVE_LTS", 50)SetInt("AWD_FMRALLYWONDRIVE", 1)SetInt("AWD_FMRALLYWONNAV", 1)SetInt("AWD_FMWINAIRRACE", 1)SetInt("AWD_FMWINSEARACE", 1)SetInt("AWD_TAXIDRIVER", 100)SetInt("RACES_WON", 50)
-	unlockXMASLiverys()
 end
 local function unlockAllTattoos()
     stats.set_int(mpx .. "TATTOO_FM_CURRENT_32", -1)
     for i = 0, 47 do
         stats.set_int(mpx .. "TATTOO_FM_UNLOCKS_" .. i, -1)
     end
+	SpecialTats()
 end
 -- List of transactions also credits to gaymer for this
 local transactions = {
@@ -565,6 +1077,8 @@ MAIN:add_bare_item("", function() return "Game version: " .. "3095" end, null, n
 MAIN:add_bare_item("",function()return"Current rank: "..globals.get_int(1845263+1+(PlayerID()*877)+205+6)end,null,null,null)
 MAIN:add_bare_item("", function() return "------------------------" end, null, null, null)
 local PLAYERPAGE = MAIN:add_submenu("Player")
+local TELEPORTPAGE = MAIN:add_submenu("Teleports")
+local SAVEDTELEPORTPAGE = TELEPORTPAGE:add_submenu("Saved positions")
 local BUSINESSES = MAIN:add_submenu("Businesses")
 local VEHICLESPAGE = MAIN:add_submenu("Vehicles")
 local MCBUSINESSES = BUSINESSES:add_submenu("MC Businesses")
@@ -597,11 +1111,203 @@ WORLDPAGE:add_toggle("Freeze NPC's", function()
     return isFrozenNPCSet
 end, function(value)
     isFrozenNPCSet = value
-	for p in replayinterface.get_vehicles() do
+	for p in replayinterface.get_peds() do
         if ped and ped ~= localplayer then
             ped:set_freeze_momentum(value)
         end
     end
+end)
+function RainNPCTIME()
+    local localPlayer = localplayer
+    local currPos = localPlayer:get_position()
+    local radius = 20
+    local numPeds = 0
+
+    for _ in replayinterface.get_peds() do
+        numPeds = numPeds + 1
+    end
+
+    for ped in replayinterface.get_peds() do
+        if ped ~= localPlayer then
+            ped:set_freeze_momentum(true)
+            local angle = (numPeds > 0 and numPeds - 1 or 0) / numPeds * 2 * math.pi
+            local xOffset = radius * math.cos(angle)
+            local yOffset = radius * math.sin(angle)
+            currPos.z = currPos.z + 15
+            ped:set_position(currPos.x + xOffset, currPos.y + yOffset, currPos.z)
+            ped:set_freeze_momentum(false)
+            numPeds = numPeds - 1
+        end
+    end
+end
+local RainVehicles = false
+local CurrPos = nil
+
+function RainVehiclesLogic()
+    CurrPos = localplayer:get_position()
+    local radius = 20
+    local numVehicles = 0
+	local currentvehicle = nil
+
+	if localplayer:is_in_vehicle() then
+		currentvehicle = localplayer:get_current_vehicle()
+	end
+	
+    for _ in replayinterface.get_vehicles() do
+        numVehicles = numVehicles + 1
+    end
+	
+    for veh in replayinterface.get_vehicles() do
+		if not currentvehicle or currentvehicle ~= veh then
+			local angle = (numVehicles > 0 and numVehicles - 1 or 0) / numVehicles * 2 * math.pi
+			local xOffset = radius * math.cos(angle)
+			local yOffset = radius * math.sin(angle)
+			CurrPos.z = CurrPos.z + 15
+			veh:set_position(CurrPos.x + xOffset, CurrPos.y + yOffset, CurrPos.z)
+			numVehicles = numVehicles - 1
+		end
+    end
+end
+function Stackvehicles()
+    local localPlayer = localplayer
+    local currPos = localPlayer:get_position()
+    local radius = 20
+    local numVehicles = 0
+    local currentVehicle = nil
+
+    if localPlayer:is_in_vehicle() then
+        currentVehicle = localPlayer:get_current_vehicle()
+    end
+    for _ in replayinterface.get_vehicles() do
+        numVehicles = numVehicles + 1
+    end
+    for veh in replayinterface.get_vehicles() do
+        if not currentVehicle or currentVehicle ~= veh then
+            local angle = (numVehicles > 0 and numVehicles - 1 or 0) / numVehicles * 2 * math.pi
+            local xOffset = radius * math.cos(angle)
+            local yOffset = radius * math.sin(angle)
+            local stackingHeight = 2  
+
+            currPos.z = currPos.z + stackingHeight
+            veh:set_position(currPos.x + xOffset, currPos.y + yOffset, currPos.z)
+
+            local pitch = math.deg(math.atan(stackingHeight / radius))
+            veh:set_rotation(vector3(pitch, 0, 0))
+
+            numVehicles = numVehicles - 1
+        end
+    end
+end
+
+function CircleVehicles()
+    local localPlayer = localplayer
+    local currPos = localPlayer:get_position()
+    local radius = 20
+    local numVehicles = 0
+    local currentVehicle = nil
+
+    if localPlayer:is_in_vehicle() then
+        currentVehicle = localPlayer:get_current_vehicle()
+    end
+
+    for _ in replayinterface.get_vehicles() do
+        numVehicles = numVehicles + 1
+    end
+
+    local angleStep = 2 * math.pi / numVehicles 
+
+    for veh in replayinterface.get_vehicles() do
+        if not currentVehicle or currentVehicle ~= veh then
+            local angle = angleStep * (numVehicles - 1)
+            local xOffset = radius * math.cos(angle)
+            local yOffset = radius * math.sin(angle)
+
+            veh:set_position(currPos.x + xOffset, currPos.y + yOffset, currPos.z)  
+
+            local facingAngle = math.deg(math.atan(yOffset / xOffset))
+
+            if xOffset < 0 then
+                facingAngle = facingAngle + 180
+            end
+
+            veh:set_rotation(vector3(0, 0, facingAngle))
+
+            numVehicles = numVehicles - 1
+        end
+    end
+end
+function CirclePeds()
+    local localPlayer = localplayer
+    local currPos = localPlayer:get_position()
+    local radius = 10
+    local numpeds = 8
+    local angleStep = 2 * math.pi / numpeds  
+    for ped in replayinterface.get_peds() do
+        if localPlayer ~= ped then
+            ped:set_freeze_momentum(true)
+            local angle = angleStep * (numpeds - 1)
+            local xOffset = radius * math.cos(angle)
+            local yOffset = radius * math.sin(angle)
+            ped:set_position(currPos.x + xOffset, currPos.y + yOffset, currPos.z) 
+            local facingAngle = math.deg(math.atan(yOffset / xOffset))
+            if xOffset < 0 then
+                facingAngle = facingAngle + 180
+            end
+            ped:set_rotation(vector3(0, 0, facingAngle))
+            ped:set_freeze_momentum(false)
+            numpeds = numpeds - 1
+        end
+    end
+end
+function StackVehiclesAbovePlayer()
+    local localPlayer = localplayer
+    local currPos = localPlayer:get_position()
+    local heightIncrement = 5  
+    local currentVehicle = nil
+
+    if localPlayer:is_in_vehicle() then
+        currentVehicle = localPlayer:get_current_vehicle()
+    end
+    local yOffset = 0  
+
+    for veh in replayinterface.get_vehicles() do
+        if not currentVehicle or currentVehicle ~= veh then
+            veh:set_position(currPos.x, currPos.y, currPos.z + yOffset)  
+            veh:set_rotation(vector3(0, 0, 0))
+
+            yOffset = yOffset + heightIncrement
+        end
+    end
+end
+
+
+WORLDPAGE:add_action("Crush yourself", function()
+    StackVehiclesAbovePlayer()
+end)
+WORLDPAGE:add_action("Cirle peds aroun you", function()
+    CirclePeds()
+end)
+WORLDPAGE:add_action("Cirle cars aroun you", function()
+    CircleVehicles()
+end)
+WORLDPAGE:add_action("Make a car pillar", function()
+    Stackvehicles()
+end)
+
+WORLDPAGE:add_action("Blow up all vehicles", function()
+    menu.kill_all_vehicles()
+end)
+WORLDPAGE:add_action("Rain vehicles", function()
+    RainVehiclesLogic()
+end)
+WORLDPAGE:add_toggle("Loop Rain vehicles", function() 
+    return RainVehicles
+end, function(value)
+    RainVehicles = value
+	while RainVehicles == true do sleep(0.5) RainVehiclesLogic() end 
+end)
+WORLDPAGE:add_action("Rain Npc's (buggy)", function()
+	RainNPCTIME()
 end)
 WORLDPAGE:add_action("Kill engine", function()
 	for v in replayinterface.get_vehicles() do
@@ -683,7 +1389,6 @@ local intplus = 1
 function spawner(car_hash)
     if localplayer == nil then return end
 	
-		--REST AND UNLOAD THE PERSONAL VEHICLE OTHERWISE IT WONT SPAWN CARS
 		local pppp = int_get_set(pvhandle())
 		if pppp ~= -1 then
 			int_get_set(pvhandle(), 0)
@@ -1500,6 +2205,9 @@ for i = 1, #alphabet do
     end
 end
 
+
+
+
 local new_cars_map = {} 
 --new_cars_map[joaat("ZR350")] = "Annis ZR350"
 --new_cars_map[joaat("remus")] = "Annis remus"
@@ -1545,6 +2253,7 @@ end
 
 
 VEHICLESPAGE:add_action("------------------------", function() end)
+
 
 local loop = false
 local CasinoChipsloop = false
@@ -1640,6 +2349,81 @@ addStatIncreaseRange("Flying", "fly")
 addStatIncreaseRange("Shooting", "sho")
 addStatIncreaseRange("Stealth", "stl")
 
+local SavedPositions = 0
+local StudTP = 10
+
+function TeleportTopos(vec1, vec2, vec3)
+    local CurrVeh = nil
+    if localplayer:is_in_vehicle() then
+		CurrVeh = localplayer:get_current_vehicle()
+        CurrVeh:set_position(vec1, vec2, vec3)
+	end
+    if CurrVeh == nil then
+        localplayer:set_position(vec1, vec2, vec3)
+    end
+end
+
+
+TELEPORTPAGE:add_int_range("Teleport studs ", 1, 1, 25, function() 
+    return StudTP
+end, function(val)
+    StudTP = val
+end)
+
+TELEPORTPAGE:add_action("Save position", function()
+    local pos = localplayer:get_position()
+    SAVEDTELEPORTPAGE:add_action("Saved position:" .. SavedPositions, function()
+        TeleportTopos(pos.x, pos.y, pos.z)
+    end)
+    SavedPositions = SavedPositions + 1
+end)
+TELEPORTPAGE:add_action("Teleport Forward", function()
+    menu.teleport_forward()
+end)
+TELEPORTPAGE:add_action("Teleport Upwards", function()
+    local pos = localplayer:get_position()
+    pos.z = pos.z + StudTP
+    TeleportTopos(pos.x, pos.y, pos.z)
+end)
+TELEPORTPAGE:add_action("Teleport Downwards", function()
+    local pos = localplayer:get_position()
+    pos.z = pos.z - StudTP
+    TeleportTopos(pos.x, pos.y, pos.z)
+end)
+TELEPORTPAGE:add_action("Teleport Left", function()
+    local pos = localplayer:get_position()
+    pos.y = pos.y + StudTP
+    TeleportTopos(pos.x, pos.y, pos.z)
+end)
+TELEPORTPAGE:add_action("Teleport Right", function()
+    local pos = localplayer:get_position()
+    pos.y = pos.y - StudTP
+    TeleportTopos(pos.x, pos.y, pos.z)
+end)
+TELEPORTPAGE:add_action("Teleport To vehicle", function()
+    menu.teleport_to_current_vehicle()
+end)
+TELEPORTPAGE:add_action("Teleport To Objective", function()
+    menu.teleport_to_objective()
+end)
+TELEPORTPAGE:add_action("Teleport To Waypoint", function()
+    menu.teleport_to_waypoint()
+end)
+TELEPORTPAGE:add_action("FIB building", function()
+    TeleportTopos(160.868, -745.831, 250.063)
+end)
+TELEPORTPAGE:add_action("IAA Office", function()
+    TeleportTopos(117.220, -620.938, 206.047)
+end)
+TELEPORTPAGE:add_action("Weed farm", function()
+    TeleportTopos(2208.777,5578.235,53.735)
+end)
+TELEPORTPAGE:add_action("Mountain chiliad", function()
+    TeleportTopos(450.718 ,5566.614 ,806.183)
+end)
+TELEPORTPAGE:add_action("Casino", function()
+    TeleportTopos(925.329,46.152,80.908)
+end)
 local function unlockRecords(records)
     for _, record in ipairs(records) do
         stats.set_bool_masked(MPx() .. record.stat, true, record.index)
@@ -1648,6 +2432,10 @@ end
 
 UNLOCKREC:add_action("Unlock ALL (MAY TAKE A MINUTE)", function()
 	UnlockALL()
+	UnlockAllParachutes()
+	unlockAllTattoos()
+	UnlockBennyVehicleOptions()
+	unlockFastRunReload()
 end)
 
 local function addUnlockAction(description, unlockFunction, unlockData)
@@ -1691,6 +2479,12 @@ UNLOCKREC:add_action("Unlock secret awards",function()
 		stats.set_int(262145 + tunable, 1)
 	end
 end)
+UNLOCKREC:add_action("Unlock All parachutes",function()
+	UnlockAllParachutes()
+end)
+UNLOCKREC:add_action("Unlock LSC Engine upgrades",function()
+	UnlockEngineUpgrades()
+end)
 
 
 local autoSessionHopOnRankChanged = false
@@ -1716,6 +2510,10 @@ RANKREC:add_action("Rank 2000", function() setRank(2000) end)
 RANKREC:add_action("Rank 5000", function() setRank(5000) end)
 RANKREC:add_action("Rank 6969", function() setRank(6969) end)
 RANKREC:add_action("Rank 8000", function() setRank(8000) end)
+
+
+
+
 
 local function resupplyBusiness(name, offset)
     MCBUSINESSES:add_action("Resupply " .. name, function()
@@ -1773,22 +2571,46 @@ local function ServerHop()
 end
 
 -- Add a menu item to go offline
-PLAYERPAGE:add_action("Server hop", function()
-    ServerHop()
+GodModeState = false
+PLAYERPAGE:add_toggle("God Mode", function()
+	return GodModeState
+end, function()
+	GodModeState = not GodModeState
+	localplayer:set_godmode(GodModeState)
 end)
 
-PLAYERPAGE:add_action("Add Badsport", function()
-    setBadsport(true)
+function AllowGenderSwap(val)
+    if val == true then
+		stats.set_int(mpx .. "ALLOW_GENDER_CHANGE", 52)
+    elseif val == false then
+		stats.set_int(mpx .. "ALLOW_GENDER_CHANGE", 0)
+    end
+end
+
+AllowGenderChange = false
+PLAYERPAGE:add_toggle("Allow switch genders",
+    function() return AllowGenderChange end,
+    function(val)
+        AllowGenderChange = val
+        AllowGenderSwap(AllowGenderChange)
 end)
 
-PLAYERPAGE:add_action("Remove Badsport", function()
-    setBadsport(false)
-end)
-PLAYERPAGE:add_action("Skip cutscene", function()
-    menu.end_cutscene()
-end)
 local PlrBigMap = false
 local PlrOFFRADAR = false
+local PlrPassiveMode = false
+local PlrNightVision = false
+PLAYERPAGE:add_toggle("Passive mode",
+    function() return PlrPassiveMode end,
+    function(val)
+        PlrPassiveMode = val
+        menu.set_passive(PlrPassiveMode)
+end)
+PLAYERPAGE:add_toggle("Night vision",
+    function() return PlrNightVision end,
+    function(val)
+        PlrNightVision = val
+        menu.set_nightvision(PlrNightVision)
+end)
 PLAYERPAGE:add_toggle("Off radar",
     function() return PlrOFFRADAR end,
     function(val)
@@ -1801,6 +2623,26 @@ PLAYERPAGE:add_toggle("Bigger map",
         PlrBigMap = val
         menu.set_big_map(PlrBigMap)
 end)
+PLAYERPAGE:add_action("Server hop", function()
+    ServerHop()
+end)
+PLAYERPAGE:add_action("Heal", function()
+    menu.heal_player()
+end)
+PLAYERPAGE:add_action("Suicide", function()
+    menu.suicide_player()
+end)
+PLAYERPAGE:add_action("Add Badsport", function()
+    setBadsport(true)
+end)
+
+PLAYERPAGE:add_action("Remove Badsport", function()
+    setBadsport(false)
+end)
+PLAYERPAGE:add_action("Skip cutscene", function()
+    menu.end_cutscene()
+end)
+
 
 TRANSACCERRORBLOCK=false
 PLAYERPAGE:add_toggle("Remove transaction errors",function()return TRANSACCERRORBLOCK end,function(val)TRANSACCERRORBLOCK=val end)
@@ -1844,11 +2686,33 @@ PLAYERPAGE:add_action("Fill armour to 69", function()
     end
 end)
 
+PLAYERPAGE:add_toggle("Tiny Player", function()	
+	if localplayer == nil then
+		return nil
+	end
+	return localplayer:get_config_flag(223)
+end, function(value)
+	localplayer:set_config_flag(223, value)
+end)
+
 function MakeCarsFLY()
 	for veh in replayinterface.get_vehicles() do
 		veh:set_gravity(-5)
 	end
 end
+local VehGodmode = false
+VEHICLESPAGE:add_toggle("Vehicle Godmode",
+    function() return VehGodmode end,
+    function(val)
+        VehGodmode = val
+        local currentvehicle = nil
+	if localplayer:is_in_vehicle() then
+		currentvehicle = localplayer:get_current_vehicle()
+        currentvehicle:set_godmode(VehGodmode)
+
+	end
+end)
+
 VEHICLESPAGE:add_action("Kill engine", function()
     vehicle:set_health(0)
 end)
@@ -1859,34 +2723,6 @@ end)
 VEHICLESPAGE:add_action("Make cars FLY [WAIT FOR UPDATED MODEST]", function()
     MakeCarsFLY()
 end)
-local RainVehicles = false
-local CurrPos = nil
-
-function RainVehiclesLogic()
-    CurrPos = localplayer:get_position()
-    local radius = 20
-    local numVehicles = 0
-	local currentvehicle = nil
-
-	if localplayer:is_in_vehicle() then
-		currentvehicle = localplayer:get_current_vehicle()
-	end
-	
-    for _ in replayinterface.get_vehicles() do
-        numVehicles = numVehicles + 1
-    end
-	
-    for veh in replayinterface.get_vehicles() do
-		if not currentvehicle or currentvehicle ~= veh then
-			local angle = (numVehicles > 0 and numVehicles - 1 or 0) / numVehicles * 2 * math.pi
-			local xOffset = radius * math.cos(angle)
-			local yOffset = radius * math.sin(angle)
-			CurrPos.z = CurrPos.z + 15
-			veh:set_position(CurrPos.x + xOffset, CurrPos.y + yOffset, CurrPos.z)
-			numVehicles = numVehicles - 1
-		end
-    end
-end
 
 VEHICLESPAGE:add_action("Skydive", function()
     CurrPos = localplayer:get_position()
@@ -1899,20 +2735,25 @@ VEHICLESPAGE:add_action("Skydive", function()
 		currentvehicle:set_position(CurrPos)
 	end
 end)
-VEHICLESPAGE:add_action("Rain vehicles", function()
-    RainVehiclesLogic()
-end)
-VEHICLESPAGE:add_toggle("Loop Rain vehicles", function() 
-    return RainVehicles
-end, function(value)
-    RainVehicles = value
-	while RainVehicles == true do sleep(0.5) RainVehiclesLogic() end 
-end)
+
 
 WORLDPAGE:add_toggle("Snow world", function() 
     return globals.get_boolean(262145 + 4575) 
 end, function(value)
     globals.set_int(262145 + 4575, value and 1 or 0)
+end)
+local WorldFrozenPeds = false
+local function SetPedsFrozen(val)
+    for v in replayinterface.get_peds() do
+        v:set_freeze_momentum(val)
+    end
+end
+
+WORLDPAGE:add_toggle("Freeze peds", function() 
+    return WorldFrozenPeds
+end, function(value)
+    WorldFrozenPeds = val
+    SetPedsFrozen(val)
 end)
 
 while TRANSACCERRORBLOCK do
