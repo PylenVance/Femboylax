@@ -7,7 +7,7 @@ local TRIGGER_HASH = 0x615762F1
 local maxSnackAmount = 6969
 local MobileRadio = false
 local SnowyWorld = false
-local FemboylaxVERS = "V1.1"
+local FemboylaxVERS = "V1.2"
 PiD = stats.get_int("MPPLY_LAST_MP_CHAR") mpx = PiD if PiD == 0 then mpx = "MP0_" else mpx = "MP1_" end 
 
  function MPx()
@@ -29,16 +29,13 @@ function CheckIfPlrExists()
 end
 
 --Changelog:
--- Added off radar Toggle
--- Added unlock secret Awards
--- Added vehicle spawner (credits to SCAAPPS)
--- Added Auto session switch on changing rank
--- Added more money transactions
--- Added big map toggle
--- Fixed Add/Remove bad sports
--- Fixed Media stick unlocker
--- Optimized Snow Add/remover
-
+-- Added Remove salvage yard mission cost
+-- Added salvage yard car custom values
+-- Added unlocker for Ecola/Sprite vehicle plates
+-- Added Raining vehicles 
+-- Added skydive feature in player
+-- Added Skydive feature in vehicles
+-- Added more cars in spawner
 
 --Car spawner by SCAAPPS
 --Link https://github.com/PylenVance/Femboylax/issues/4
@@ -593,6 +590,38 @@ createStoreMoneyEditor(STORYMODEPAGE, "Trevor", "SP2_TOTAL_CASH")
 
 addTransactionsToSubMenu(TRANSACPAGECASH, transactions)
 
+
+local isFrozenNPCSet = false
+
+WORLDPAGE:add_toggle("Freeze NPC's", function()
+    return isFrozenNPCSet
+end, function(value)
+    isFrozenNPCSet = value
+	for p in replayinterface.get_vehicles() do
+        if ped and ped ~= localplayer then
+            ped:set_freeze_momentum(value)
+        end
+    end
+end)
+WORLDPAGE:add_action("Kill engine", function()
+	for v in replayinterface.get_vehicles() do
+		if v ~= nil then
+			v:set_health(0)
+		end
+	end
+end)
+WORLDPAGE:add_action("Revive engine", function()
+	for v in replayinterface.get_vehicles() do
+		if v ~= nil then
+			v:set_health(1000)
+		end
+	end
+end)
+
+WORLDPAGE:add_action("Kill All NPCs", function()
+    menu.kill_all_npcs()
+end)
+
 function int_get_set(a,b)
 	local i=globals.get_int(a) 
 	if b and b~=i then 
@@ -661,7 +690,7 @@ function spawner(car_hash)
 			int_get_set(pvhandle(), -1)
 		    int_get_set(2359980,0)	
 		    int_get_set(2640103,0)
-		    sleep(2)
+		    --sleep(2)
 	    end 
 	    if global_unlock_map[car_hash] then
 		   local global_unlock = global_unlock_map[car_hash]
@@ -708,10 +737,773 @@ for i = 1, #alphabet do
        end
     end
 end
+local old_cars = {}
+
+
+old_cars[joaat("adder")] = "adder"
+old_cars[joaat("airbus")] = "airbus"
+old_cars[joaat("airtug")] = "airtug"
+old_cars[joaat("akula")] = "akula"
+old_cars[joaat("akuma")] = "akuma"
+old_cars[joaat("alpha")] = "alpha"
+old_cars[joaat("alphaz1")] = "alphaz1"
+old_cars[joaat("alkonost")] = "alkonost"
+old_cars[joaat("ambulance")] = "ambulance"
+old_cars[joaat("annihilator2")] = "annihilator2"
+old_cars[joaat("annihilator")] = "annihilator"
+old_cars[joaat("apc")] = "apc"
+old_cars[joaat("ardent")] = "ardent"
+old_cars[joaat("armytanker")] = "armytanker"
+old_cars[joaat("armytrailer2")] = "armytrailer2"
+old_cars[joaat("armytrailer")] = "armytrailer"
+old_cars[joaat("asbo")] = "asbo"
+old_cars[joaat("asea2")] = "asea2"
+old_cars[joaat("asea")] = "asea"
+old_cars[joaat("asterope")] = "asterope"
+old_cars[joaat("autarch")] = "autarch"
+old_cars[joaat("avarus")] = "avarus"
+old_cars[joaat("avenger2")] = "avenger2"
+old_cars[joaat("avenger")] = "avenger"
+old_cars[joaat("avisa")] = "avisa"
+old_cars[joaat("bagger")] = "bagger"
+old_cars[joaat("baletrailer")] = "baletrailer"
+old_cars[joaat("baller2")] = "baller2"
+old_cars[joaat("baller3")] = "baller3"
+old_cars[joaat("baller4")] = "baller4"
+old_cars[joaat("baller5")] = "baller5"
+old_cars[joaat("baller6")] = "baller6"
+old_cars[joaat("baller")] = "baller"
+old_cars[joaat("banshee2")] = "banshee2"
+old_cars[joaat("banshee")] = "banshee"
+old_cars[joaat("barracks2")] = "barracks2"
+old_cars[joaat("barracks3")] = "barracks3"
+old_cars[joaat("barracks")] = "barracks"
+old_cars[joaat("barrage")] = "barrage"
+old_cars[joaat("bati2")] = "bati2"
+old_cars[joaat("bati")] = "bati"
+old_cars[joaat("benson")] = "benson"
+old_cars[joaat("besra")] = "besra"
+old_cars[joaat("bestiagts")] = "bestiagts"
+old_cars[joaat("bf400")] = "bf400"
+old_cars[joaat("bfinjection")] = "bfinjection"
+old_cars[joaat("biff")] = "biff"
+old_cars[joaat("bifta")] = "bifta"
+old_cars[joaat("bison2")] = "bison2"
+old_cars[joaat("bison3")] = "bison3"
+old_cars[joaat("bison")] = "bison"
+old_cars[joaat("bjxl")] = "bjxl"
+old_cars[joaat("blade")] = "blade"
+old_cars[joaat("blazer2")] = "blazer2"
+old_cars[joaat("blazer3")] = "blazer3"
+old_cars[joaat("blazer4")] = "blazer4"
+old_cars[joaat("blazer5")] = "blazer5"
+old_cars[joaat("blazer")] = "blazer"
+old_cars[joaat("blimp2")] = "blimp2"
+old_cars[joaat("blimp3")] = "blimp3"
+old_cars[joaat("blimp")] = "blimp"
+old_cars[joaat("blista2")] = "blista2"
+old_cars[joaat("blista3")] = "blista3"
+old_cars[joaat("blista")] = "blista"
+old_cars[joaat("bmx")] = "bmx"
+old_cars[joaat("boattrailer")] = "boattrailer"
+old_cars[joaat("bobcatxl")] = "bobcatxl"
+old_cars[joaat("bodhi2")] = "bodhi2"
+old_cars[joaat("bombushka")] = "bombushka"
+old_cars[joaat("boxville2")] = "boxville2"
+old_cars[joaat("boxville3")] = "boxville3"
+old_cars[joaat("boxville4")] = "boxville4"
+old_cars[joaat("boxville5")] = "boxville5"
+old_cars[joaat("boxville")] = "boxville"
+old_cars[joaat("brawler")] = "brawler"
+old_cars[joaat("brickade")] = "brickade"
+old_cars[joaat("brioso2")] = "brioso2"
+old_cars[joaat("brioso")] = "brioso"
+old_cars[joaat("bruiser2")] = "bruiser2"
+old_cars[joaat("bruiser3")] = "bruiser3"
+old_cars[joaat("bruiser")] = "bruiser"
+old_cars[joaat("brutus2")] = "brutus2"
+old_cars[joaat("brutus3")] = "brutus3"
+old_cars[joaat("brutus")] = "brutus"
+old_cars[joaat("btype2")] = "btype2"
+old_cars[joaat("btype3")] = "btype3"
+old_cars[joaat("btype")] = "btype"
+old_cars[joaat("buccaneer2")] = "buccaneer2"
+old_cars[joaat("buccaneer")] = "buccaneer"
+old_cars[joaat("buffalo2")] = "buffalo2"
+old_cars[joaat("buffalo3")] = "buffalo3"
+old_cars[joaat("buffalo")] = "buffalo"
+old_cars[joaat("bulldozer")] = "bulldozer"
+old_cars[joaat("bullet")] = "bullet"
+old_cars[joaat("burrito2")] = "burrito2"
+old_cars[joaat("burrito3")] = "burrito3"
+old_cars[joaat("burrito4")] = "burrito4"
+old_cars[joaat("burrito5")] = "burrito5"
+old_cars[joaat("burrito")] = "burrito"
+old_cars[joaat("bus")] = "bus"
+old_cars[joaat("buzzard2")] = "buzzard2"
+old_cars[joaat("buzzard")] = "buzzard"
+old_cars[joaat("cablecar")] = "cablecar"
+old_cars[joaat("caddy2")] = "caddy2"
+old_cars[joaat("caddy3")] = "caddy3"
+old_cars[joaat("caddy")] = "caddy"
+old_cars[joaat("camper")] = "camper"
+old_cars[joaat("calico")] = "calico"
+old_cars[joaat("caracara2")] = "caracara2"
+old_cars[joaat("caracara")] = "caracara"
+old_cars[joaat("carbonizzare")] = "carbonizzare"
+old_cars[joaat("carbonrs")] = "carbonrs"
+old_cars[joaat("cargobob2")] = "cargobob2"
+old_cars[joaat("cargobob3")] = "cargobob3"
+old_cars[joaat("cargobob4")] = "cargobob4"
+old_cars[joaat("cargobob")] = "cargobob"
+old_cars[joaat("cargoplane")] = "cargoplane"
+old_cars[joaat("casco")] = "casco"
+old_cars[joaat("cavalcade2")] = "cavalcade2"
+old_cars[joaat("cavalcade")] = "cavalcade"
+old_cars[joaat("cerberus2")] = "cerberus2"
+old_cars[joaat("cerberus3")] = "cerberus3"
+old_cars[joaat("cerberus")] = "cerberus"
+old_cars[joaat("cheburek")] = "cheburek"
+old_cars[joaat("cheetah2")] = "cheetah2"
+old_cars[joaat("cheetah")] = "cheetah"
+old_cars[joaat("chernobog")] = "chernobog"
+old_cars[joaat("chimera")] = "chimera"
+old_cars[joaat("chino2")] = "chino2"
+old_cars[joaat("chino")] = "chino"
+old_cars[joaat("cliffhanger")] = "cliffhanger"
+old_cars[joaat("clique")] = "clique"
+old_cars[joaat("club")] = "club"
+old_cars[joaat("coach")] = "coach"
+old_cars[joaat("cog552")] = "cog552"
+old_cars[joaat("cog55")] = "cog55"
+old_cars[joaat("cogcabrio")] = "cogcabrio"
+old_cars[joaat("cognoscenti2")] = "cognoscenti2"
+old_cars[joaat("cognoscenti")] = "cognoscenti"
+old_cars[joaat("comet2")] = "comet2"
+old_cars[joaat("comet3")] = "comet3"
+old_cars[joaat("comet4")] = "comet4"
+old_cars[joaat("comet5")] = "comet5"
+old_cars[joaat("comet6")] = "comet6"
+old_cars[joaat("contender")] = "contender"
+old_cars[joaat("coquette2")] = "coquette2"
+old_cars[joaat("coquette3")] = "coquette3"
+old_cars[joaat("coquette4")] = "coquette4"
+old_cars[joaat("coquette")] = "coquette"
+old_cars[joaat("cruiser")] = "cruiser"
+old_cars[joaat("crusader")] = "crusader"
+old_cars[joaat("cuban800")] = "cuban800"
+old_cars[joaat("cutter")] = "cutter"
+old_cars[joaat("cyclone")] = "cyclone"
+old_cars[joaat("cypher")] = "cypher"
+old_cars[joaat("daemon2")] = "daemon2"
+old_cars[joaat("daemon")] = "daemon"
+old_cars[joaat("deathbike2")] = "deathbike2"
+old_cars[joaat("deathbike3")] = "deathbike3"
+old_cars[joaat("deathbike")] = "deathbike"
+old_cars[joaat("defiler")] = "defiler"
+old_cars[joaat("deluxo")] = "deluxo"
+old_cars[joaat("deveste")] = "deveste"
+old_cars[joaat("deviant")] = "deviant"
+old_cars[joaat("diablous2")] = "diablous2"
+old_cars[joaat("diablous")] = "diablous"
+old_cars[joaat("dilettante2")] = "dilettante2"
+old_cars[joaat("dilettante")] = "dilettante"
+old_cars[joaat("dinghy2")] = "dinghy2"
+old_cars[joaat("dinghy3")] = "dinghy3"
+old_cars[joaat("dinghy4")] = "dinghy4"
+old_cars[joaat("dinghy5")] = "dinghy5"
+old_cars[joaat("dinghy")] = "dinghy"
+old_cars[joaat("dloader")] = "dloader"
+old_cars[joaat("docktrailer")] = "docktrailer"
+old_cars[joaat("docktug")] = "docktug"
+old_cars[joaat("dodo")] = "dodo"
+old_cars[joaat("dominator2")] = "dominator2"
+old_cars[joaat("dominator3")] = "dominator3"
+old_cars[joaat("dominator4")] = "dominator4"
+old_cars[joaat("dominator5")] = "dominator5"
+old_cars[joaat("dominator6")] = "dominator6"
+old_cars[joaat("dominator7")] = "dominator7"
+old_cars[joaat("dominator8")] = "dominator8"
+old_cars[joaat("dominator")] = "dominator"
+old_cars[joaat("double")] = "double"
+old_cars[joaat("drafter")] = "drafter"
+old_cars[joaat("dubsta2")] = "dubsta2"
+old_cars[joaat("dubsta3")] = "dubsta3"
+old_cars[joaat("dubsta")] = "dubsta"
+old_cars[joaat("dukes2")] = "dukes2"
+old_cars[joaat("dukes3")] = "dukes3"
+old_cars[joaat("dukes")] = "dukes"
+old_cars[joaat("dump")] = "dump"
+old_cars[joaat("dune2")] = "dune2"
+old_cars[joaat("dune3")] = "dune3"
+old_cars[joaat("dune4")] = "dune4"
+old_cars[joaat("dune5")] = "dune5"
+old_cars[joaat("dune")] = "dune"
+old_cars[joaat("duster")] = "duster"
+old_cars[joaat("dynasty")] = "dynasty"
+old_cars[joaat("elegy2")] = "elegy2"
+old_cars[joaat("elegy")] = "elegy"
+old_cars[joaat("ellie")] = "ellie"
+old_cars[joaat("emerus")] = "emerus"
+old_cars[joaat("emperor2")] = "emperor2"
+old_cars[joaat("emperor3")] = "emperor3"
+old_cars[joaat("emperor")] = "emperor"
+old_cars[joaat("enduro")] = "enduro"
+old_cars[joaat("entity2")] = "entity2"
+old_cars[joaat("entityxf")] = "entityxf"
+old_cars[joaat("esskey")] = "esskey"
+old_cars[joaat("euros")] = "euros"
+old_cars[joaat("everon")] = "everon"
+old_cars[joaat("exemplar")] = "exemplar"
+old_cars[joaat("f620")] = "f620"
+old_cars[joaat("faction2")] = "faction2"
+old_cars[joaat("faction3")] = "faction3"
+old_cars[joaat("faction")] = "faction"
+old_cars[joaat("fagaloa")] = "fagaloa"
+old_cars[joaat("faggio2")] = "faggio2"
+old_cars[joaat("faggio3")] = "faggio3"
+old_cars[joaat("faggio")] = "faggio"
+old_cars[joaat("fbi2")] = "fbi2"
+old_cars[joaat("fbi")] = "fbi"
+old_cars[joaat("fcr2")] = "fcr2"
+old_cars[joaat("fcr")] = "fcr"
+old_cars[joaat("felon2")] = "felon2"
+old_cars[joaat("felon")] = "felon"
+old_cars[joaat("feltzer2")] = "feltzer2"
+old_cars[joaat("feltzer3")] = "feltzer3"
+old_cars[joaat("firetruk")] = "firetruk"
+old_cars[joaat("fixter")] = "fixter"
+old_cars[joaat("flashgt")] = "flashgt"
+old_cars[joaat("flatbed")] = "flatbed"
+old_cars[joaat("fmj")] = "fmj"
+old_cars[joaat("forklift")] = "forklift"
+old_cars[joaat("formula2")] = "formula2"
+old_cars[joaat("formula")] = "formula"
+old_cars[joaat("fq2")] = "fq2"
+old_cars[joaat("freecrawler")] = "freecrawler"
+old_cars[joaat("freight")] = "freight"
+old_cars[joaat("freightcar")] = "freightcar"
+old_cars[joaat("freightcar2")] = "freightcar2"
+old_cars[joaat("freightcont1")] = "freightcont1"
+old_cars[joaat("freightcont2")] = "freightcont2"
+old_cars[joaat("freightgrain")] = "freightgrain"
+old_cars[joaat("freighttrailer")] = "freighttrailer"
+old_cars[joaat("frogger2")] = "frogger2"
+old_cars[joaat("frogger")] = "frogger"
+old_cars[joaat("fugitive")] = "fugitive"
+old_cars[joaat("furia")] = "furia"
+old_cars[joaat("furoregt")] = "furoregt"
+old_cars[joaat("fusilade")] = "fusilade"
+old_cars[joaat("futo")] = "futo"
+old_cars[joaat("futo2")] = "futo2"
+old_cars[joaat("gargoyle")] = "gargoyle"
+old_cars[joaat("gauntlet2")] = "gauntlet2"
+old_cars[joaat("gauntlet3")] = "gauntlet3"
+old_cars[joaat("gauntlet4")] = "gauntlet4"
+old_cars[joaat("gauntlet5")] = "gauntlet5"
+old_cars[joaat("gauntlet")] = "gauntlet"
+old_cars[joaat("gb200")] = "gb200"
+old_cars[joaat("gburrito2")] = "gburrito2"
+old_cars[joaat("gburrito")] = "gburrito"
+old_cars[joaat("glendale2")] = "glendale2"
+old_cars[joaat("glendale")] = "glendale"
+old_cars[joaat("gp1")] = "gp1"
+old_cars[joaat("graintrailer")] = "graintrailer"
+old_cars[joaat("granger")] = "granger"
+old_cars[joaat("gresley")] = "gresley"
+old_cars[joaat("growler")] = "growler"
+old_cars[joaat("gt500")] = "gt500"
+old_cars[joaat("guardian")] = "guardian"
+old_cars[joaat("habanero")] = "habanero"
+old_cars[joaat("hakuchou2")] = "hakuchou2"
+old_cars[joaat("hakuchou")] = "hakuchou"
+old_cars[joaat("halftrack")] = "halftrack"
+old_cars[joaat("handler")] = "handler"
+old_cars[joaat("hauler2")] = "hauler2"
+old_cars[joaat("hauler")] = "hauler"
+old_cars[joaat("havok")] = "havok"
+old_cars[joaat("hellion")] = "hellion"
+old_cars[joaat("hermes")] = "hermes"
+old_cars[joaat("hexer")] = "hexer"
+old_cars[joaat("hotknife")] = "hotknife"
+old_cars[joaat("hotring")] = "hotring"
+old_cars[joaat("howard")] = "howard"
+old_cars[joaat("hunter")] = "hunter"
+old_cars[joaat("huntley")] = "huntley"
+old_cars[joaat("hustler")] = "hustler"
+old_cars[joaat("hydra")] = "hydra"
+old_cars[joaat("imorgon")] = "imorgon"
+old_cars[joaat("impaler2")] = "impaler2"
+old_cars[joaat("impaler3")] = "impaler3"
+old_cars[joaat("impaler4")] = "impaler4"
+old_cars[joaat("impaler")] = "impaler"
+old_cars[joaat("imperator2")] = "imperator2"
+old_cars[joaat("imperator3")] = "imperator3"
+old_cars[joaat("imperator")] = "imperator"
+old_cars[joaat("infernus2")] = "infernus2"
+old_cars[joaat("infernus")] = "infernus"
+old_cars[joaat("ingot")] = "ingot"
+old_cars[joaat("innovation")] = "innovation"
+old_cars[joaat("insurgent2")] = "insurgent2"
+old_cars[joaat("insurgent3")] = "insurgent3"
+old_cars[joaat("insurgent")] = "insurgent"
+old_cars[joaat("intruder")] = "intruder"
+old_cars[joaat("issi2")] = "issi2"
+old_cars[joaat("issi3")] = "issi3"
+old_cars[joaat("issi4")] = "issi4"
+old_cars[joaat("issi5")] = "issi5"
+old_cars[joaat("issi6")] = "issi6"
+old_cars[joaat("issi7")] = "issi7"
+old_cars[joaat("italigtb2")] = "italigtb2"
+old_cars[joaat("italigtb")] = "italigtb"
+old_cars[joaat("italigto")] = "italigto"
+old_cars[joaat("italirsx")] = "italirsx"
+old_cars[joaat("jackal")] = "jackal"
+old_cars[joaat("jb7002")] = "jb7002"
+old_cars[joaat("jb700")] = "jb700"
+old_cars[joaat("jester4")] = "jester4"
+old_cars[joaat("jester2")] = "jester2"
+old_cars[joaat("jester3")] = "jester3"
+old_cars[joaat("jester")] = "jester"
+old_cars[joaat("jet")] = "jet"
+old_cars[joaat("jetmax")] = "jetmax"
+old_cars[joaat("journey")] = "journey"
+old_cars[joaat("jugular")] = "jugular"
+old_cars[joaat("kalahari")] = "kalahari"
+old_cars[joaat("kamacho")] = "kamacho"
+old_cars[joaat("kanjo")] = "kanjo"
+old_cars[joaat("khamelion")] = "khamelion"
+old_cars[joaat("khanjali")] = "khanjali"
+old_cars[joaat("komoda")] = "komoda"
+old_cars[joaat("kosatka")] = "kosatka"
+old_cars[joaat("krieger")] = "krieger"
+old_cars[joaat("kuruma2")] = "kuruma2"
+old_cars[joaat("kuruma")] = "kuruma"
+old_cars[joaat("landstalker2")] = "landstalker2"
+old_cars[joaat("landstalker")] = "landstalker"
+old_cars[joaat("lazer")] = "lazer"
+old_cars[joaat("le7b")] = "le7b"
+old_cars[joaat("lectro")] = "lectro"
+old_cars[joaat("lguard")] = "lguard"
+old_cars[joaat("limo2")] = "limo2"
+old_cars[joaat("locust")] = "locust"
+old_cars[joaat("longfin")] = "longfin"
+old_cars[joaat("lurcher")] = "lurcher"
+old_cars[joaat("luxor2")] = "luxor2"
+old_cars[joaat("luxor")] = "luxor"
+old_cars[joaat("lynx")] = "lynx"
+old_cars[joaat("mamba")] = "mamba"
+old_cars[joaat("mammatus")] = "mammatus"
+old_cars[joaat("manana2")] = "manana2"
+old_cars[joaat("manana")] = "manana"
+old_cars[joaat("manchez2")] = "manchez2"
+old_cars[joaat("manchez")] = "manchez"
+old_cars[joaat("marquis")] = "marquis"
+old_cars[joaat("marshall")] = "marshall"
+old_cars[joaat("massacro2")] = "massacro2"
+old_cars[joaat("massacro")] = "massacro"
+old_cars[joaat("maverick")] = "maverick"
+old_cars[joaat("menacer")] = "menacer"
+old_cars[joaat("mesa2")] = "mesa2"
+old_cars[joaat("mesa3")] = "mesa3"
+old_cars[joaat("mesa")] = "mesa"
+old_cars[joaat("metrotrain")] = "metrotrain"
+old_cars[joaat("michelli")] = "michelli"
+old_cars[joaat("microlight")] = "microlight"
+old_cars[joaat("miljet")] = "miljet"
+old_cars[joaat("minitank")] = "minitank"
+old_cars[joaat("minivan2")] = "minivan2"
+old_cars[joaat("minivan")] = "minivan"
+old_cars[joaat("mixer2")] = "mixer2"
+old_cars[joaat("mixer")] = "mixer"
+old_cars[joaat("mogul")] = "mogul"
+old_cars[joaat("molotok")] = "molotok"
+old_cars[joaat("monroe")] = "monroe"
+old_cars[joaat("monster3")] = "monster3"
+old_cars[joaat("monster4")] = "monster4"
+old_cars[joaat("monster5")] = "monster5"
+old_cars[joaat("monster")] = "monster"
+old_cars[joaat("moonbeam2")] = "moonbeam2"
+old_cars[joaat("moonbeam")] = "moonbeam"
+old_cars[joaat("mower")] = "mower"
+old_cars[joaat("mule2")] = "mule2"
+old_cars[joaat("mule3")] = "mule3"
+old_cars[joaat("mule4")] = "mule4"
+old_cars[joaat("mule")] = "mule"
+old_cars[joaat("nebula")] = "nebula"
+old_cars[joaat("nemesis")] = "nemesis"
+old_cars[joaat("neo")] = "neo"
+old_cars[joaat("neon")] = "neon"
+old_cars[joaat("nero2")] = "nero2"
+old_cars[joaat("nero")] = "nero"
+old_cars[joaat("nightblade")] = "nightblade"
+old_cars[joaat("nightshade")] = "nightshade"
+old_cars[joaat("nightshark")] = "nightshark"
+old_cars[joaat("nimbus")] = "nimbus"
+old_cars[joaat("ninef2")] = "ninef2"
+old_cars[joaat("ninef")] = "ninef"
+old_cars[joaat("nokota")] = "nokota"
+old_cars[joaat("novak")] = "novak"
+old_cars[joaat("omnis")] = "omnis"
+old_cars[joaat("openwheel1")] = "openwheel1"
+old_cars[joaat("openwheel2")] = "openwheel2"
+old_cars[joaat("oppressor2")] = "oppressor2"
+old_cars[joaat("oppressor")] = "oppressor"
+old_cars[joaat("oracle2")] = "oracle2"
+old_cars[joaat("oracle")] = "oracle"
+old_cars[joaat("osiris")] = "osiris"
+old_cars[joaat("outlaw")] = "outlaw"
+old_cars[joaat("packer")] = "packer"
+old_cars[joaat("panto")] = "panto"
+old_cars[joaat("paradise")] = "paradise"
+old_cars[joaat("paragon2")] = "paragon2"
+old_cars[joaat("paragon")] = "paragon"
+old_cars[joaat("pariah")] = "pariah"
+old_cars[joaat("patriot2")] = "patriot2"
+old_cars[joaat("patriot")] = "patriot"
+old_cars[joaat("patrolboat")] = "patrolboat"
+old_cars[joaat("pbus2")] = "pbus2"
+old_cars[joaat("pbus")] = "pbus"
+old_cars[joaat("pcj")] = "pcj"
+old_cars[joaat("penetrator")] = "penetrator"
+old_cars[joaat("penumbra2")] = "penumbra2"
+old_cars[joaat("penumbra")] = "penumbra"
+old_cars[joaat("peyote2")] = "peyote2"
+old_cars[joaat("peyote3")] = "peyote3"
+old_cars[joaat("peyote")] = "peyote"
+old_cars[joaat("pfister811")] = "pfister811"
+old_cars[joaat("phantom2")] = "phantom2"
+old_cars[joaat("phantom3")] = "phantom3"
+old_cars[joaat("phantom")] = "phantom"
+old_cars[joaat("phoenix")] = "phoenix"
+old_cars[joaat("picador")] = "picador"
+old_cars[joaat("pigalle")] = "pigalle"
+old_cars[joaat("police2")] = "police2"
+old_cars[joaat("police3")] = "police3"
+old_cars[joaat("police4")] = "police4"
+old_cars[joaat("police")] = "police"
+old_cars[joaat("policeb")] = "policeb"
+old_cars[joaat("policeold1")] = "policeold1"
+old_cars[joaat("policeold2")] = "policeold2"
+old_cars[joaat("policet")] = "policet"
+old_cars[joaat("polmav")] = "polmav"
+old_cars[joaat("pony2")] = "pony2"
+old_cars[joaat("pony")] = "pony"
+old_cars[joaat("pounder2")] = "pounder2"
+old_cars[joaat("pounder")] = "pounder"
+old_cars[joaat("prairie")] = "prairie"
+old_cars[joaat("pranger")] = "pranger"
+old_cars[joaat("predator")] = "predator"
+old_cars[joaat("premier")] = "premier"
+old_cars[joaat("previon")] = "previon"
+old_cars[joaat("primo2")] = "primo2"
+old_cars[joaat("primo")] = "primo"
+old_cars[joaat("proptrailer")] = "proptrailer"
+old_cars[joaat("prototipo")] = "prototipo"
+old_cars[joaat("pyro")] = "pyro"
+old_cars[joaat("radi")] = "radi"
+old_cars[joaat("raiden")] = "raiden"
+old_cars[joaat("raketrailer")] = "raketrailer"
+old_cars[joaat("rallytruck")] = "rallytruck"
+old_cars[joaat("rancherxl2")] = "rancherxl2"
+old_cars[joaat("rancherxl")] = "rancherxl"
+old_cars[joaat("rapidgt2")] = "rapidgt2"
+old_cars[joaat("rapidgt3")] = "rapidgt3"
+old_cars[joaat("rapidgt")] = "rapidgt"
+old_cars[joaat("raptor")] = "raptor"
+old_cars[joaat("ratbike")] = "ratbike"
+old_cars[joaat("ratloader2")] = "ratloader2"
+old_cars[joaat("ratloader")] = "ratloader"
+old_cars[joaat("rcbandito")] = "rcbandito"
+old_cars[joaat("reaper")] = "reaper"
+old_cars[joaat("rebel2")] = "rebel2"
+old_cars[joaat("rebel")] = "rebel"
+old_cars[joaat("rebla")] = "rebla"
+old_cars[joaat("regina")] = "regina"
+old_cars[joaat("remus")] = "remus"
+old_cars[joaat("rentalbus")] = "rentalbus"
+old_cars[joaat("retinue2")] = "retinue2"
+old_cars[joaat("retinue")] = "retinue"
+old_cars[joaat("revolter")] = "revolter"
+old_cars[joaat("rhapsody")] = "rhapsody"
+old_cars[joaat("rhino")] = "rhino"
+old_cars[joaat("riata")] = "riata"
+old_cars[joaat("riot2")] = "riot2"
+old_cars[joaat("riot")] = "riot"
+old_cars[joaat("ripley")] = "ripley"
+old_cars[joaat("rocoto")] = "rocoto"
+old_cars[joaat("rogue")] = "rogue"
+old_cars[joaat("romero")] = "romero"
+old_cars[joaat("rrocket")] = "rrocket"
+old_cars[joaat("rt3000")] = "rt3000"
+old_cars[joaat("rubble")] = "rubble"
+old_cars[joaat("ruffian")] = "ruffian"
+old_cars[joaat("ruiner2")] = "ruiner2"
+old_cars[joaat("ruiner3")] = "ruiner3"
+old_cars[joaat("ruiner")] = "ruiner"
+old_cars[joaat("rumpo2")] = "rumpo2"
+old_cars[joaat("rumpo3")] = "rumpo3"
+old_cars[joaat("rumpo")] = "rumpo"
+old_cars[joaat("ruston")] = "ruston"
+old_cars[joaat("s80")] = "s80"
+old_cars[joaat("sabregt2")] = "sabregt2"
+old_cars[joaat("sabregt")] = "sabregt"
+old_cars[joaat("sadler2")] = "sadler2"
+old_cars[joaat("sadler")] = "sadler"
+old_cars[joaat("sanchez2")] = "sanchez2"
+old_cars[joaat("sanchez")] = "sanchez"
+old_cars[joaat("sanctus")] = "sanctus"
+old_cars[joaat("sandking2")] = "sandking2"
+old_cars[joaat("sandking")] = "sandking"
+old_cars[joaat("savage")] = "savage"
+old_cars[joaat("savestra")] = "savestra"
+old_cars[joaat("sc1")] = "sc1"
+old_cars[joaat("scarab2")] = "scarab2"
+old_cars[joaat("scarab3")] = "scarab3"
+old_cars[joaat("scarab")] = "scarab"
+old_cars[joaat("schafter2")] = "schafter2"
+old_cars[joaat("schafter3")] = "schafter3"
+old_cars[joaat("schafter4")] = "schafter4"
+old_cars[joaat("schafter5")] = "schafter5"
+old_cars[joaat("schafter6")] = "schafter6"
+old_cars[joaat("schlagen")] = "schlagen"
+old_cars[joaat("schwarzer")] = "schwarzer"
+old_cars[joaat("scorcher")] = "scorcher"
+old_cars[joaat("scramjet")] = "scramjet"
+old_cars[joaat("scrap")] = "scrap"
+old_cars[joaat("seabreeze")] = "seabreeze"
+old_cars[joaat("seashark2")] = "seashark2"
+old_cars[joaat("seashark3")] = "seashark3"
+old_cars[joaat("seashark")] = "seashark"
+old_cars[joaat("seasparrow2")] = "seasparrow2"
+old_cars[joaat("seasparrow3")] = "seasparrow3"
+old_cars[joaat("seasparrow")] = "seasparrow"
+old_cars[joaat("seminole2")] = "seminole2"
+old_cars[joaat("seminole")] = "seminole"
+old_cars[joaat("sentinel2")] = "sentinel2"
+old_cars[joaat("sentinel3")] = "sentinel3"
+old_cars[joaat("sentinel")] = "sentinel"
+old_cars[joaat("serrano")] = "serrano"
+old_cars[joaat("seven70")] = "seven70"
+old_cars[joaat("shamal")] = "shamal"
+old_cars[joaat("sheava")] = "sheava"
+old_cars[joaat("sheriff2")] = "sheriff2"
+old_cars[joaat("sheriff")] = "sheriff"
+old_cars[joaat("shotaro")] = "shotaro"
+old_cars[joaat("skylift")] = "skylift"
+old_cars[joaat("slamtruck")] = "slamtruck"
+old_cars[joaat("slamvan2")] = "slamvan2"
+old_cars[joaat("slamvan3")] = "slamvan3"
+old_cars[joaat("slamvan4")] = "slamvan4"
+old_cars[joaat("slamvan5")] = "slamvan5"
+old_cars[joaat("slamvan6")] = "slamvan6"
+old_cars[joaat("slamvan")] = "slamvan"
+old_cars[joaat("sovereign")] = "sovereign"
+old_cars[joaat("specter2")] = "specter2"
+old_cars[joaat("specter")] = "specter"
+old_cars[joaat("speeder2")] = "speeder2"
+old_cars[joaat("speeder")] = "speeder"
+old_cars[joaat("speedo2")] = "speedo2"
+old_cars[joaat("speedo4")] = "speedo4"
+old_cars[joaat("speedo")] = "speedo"
+old_cars[joaat("squaddie")] = "squaddie"
+old_cars[joaat("squalo")] = "squalo"
+old_cars[joaat("stafford")] = "stafford"
+old_cars[joaat("stalion2")] = "stalion2"
+old_cars[joaat("stalion")] = "stalion"
+old_cars[joaat("stanier")] = "stanier"
+old_cars[joaat("starling")] = "starling"
+old_cars[joaat("stinger")] = "stinger"
+old_cars[joaat("stingergt")] = "stingergt"
+old_cars[joaat("stockade3")] = "stockade3"
+old_cars[joaat("stockade")] = "stockade"
+old_cars[joaat("stratum")] = "stratum"
+old_cars[joaat("streiter")] = "streiter"
+old_cars[joaat("stretch")] = "stretch"
+old_cars[joaat("strikeforce")] = "strikeforce"
+old_cars[joaat("stromberg")] = "stromberg"
+old_cars[joaat("stryder")] = "stryder"
+old_cars[joaat("stunt")] = "stunt"
+old_cars[joaat("submersible2")] = "submersible2"
+old_cars[joaat("submersible")] = "submersible"
+old_cars[joaat("sugoi")] = "sugoi"
+old_cars[joaat("sultan3")] = "sultan3"
+old_cars[joaat("sultan2")] = "sultan2"
+old_cars[joaat("sultan")] = "sultan"
+old_cars[joaat("sultanrs")] = "sultanrs"
+old_cars[joaat("suntrap")] = "suntrap"
+old_cars[joaat("superd")] = "superd"
+old_cars[joaat("supervolito2")] = "supervolito2"
+old_cars[joaat("supervolito")] = "supervolito"
+old_cars[joaat("surano")] = "surano"
+old_cars[joaat("surfer2")] = "surfer2"
+old_cars[joaat("surfer")] = "surfer"
+old_cars[joaat("surge")] = "surge"
+old_cars[joaat("swift2")] = "swift2"
+old_cars[joaat("swift")] = "swift"
+old_cars[joaat("swinger")] = "swinger"
+old_cars[joaat("t20")] = "t20"
+old_cars[joaat("taco")] = "taco"
+old_cars[joaat("tailgater2")] = "tailgater2"
+old_cars[joaat("tailgater")] = "tailgater"
+old_cars[joaat("taipan")] = "taipan"
+old_cars[joaat("tampa2")] = "tampa2"
+old_cars[joaat("tampa3")] = "tampa3"
+old_cars[joaat("tampa")] = "tampa"
+old_cars[joaat("tanker2")] = "tanker2"
+old_cars[joaat("tanker")] = "tanker"
+old_cars[joaat("tankercar")] = "tankercar"
+old_cars[joaat("taxi")] = "taxi"
+old_cars[joaat("technical2")] = "technical2"
+old_cars[joaat("technical3")] = "technical3"
+old_cars[joaat("technical")] = "technical"
+old_cars[joaat("tempesta")] = "tempesta"
+old_cars[joaat("terbyte")] = "terbyte"
+old_cars[joaat("tezeract")] = "tezeract"
+old_cars[joaat("thrax")] = "thrax"
+old_cars[joaat("thrust")] = "thrust"
+old_cars[joaat("thruster")] = "thruster"
+old_cars[joaat("tigon")] = "tigon"
+old_cars[joaat("tiptruck2")] = "tiptruck2"
+old_cars[joaat("tiptruck")] = "tiptruck"
+old_cars[joaat("titan")] = "titan"
+old_cars[joaat("torero")] = "torero"
+old_cars[joaat("tornado2")] = "tornado2"
+old_cars[joaat("tornado3")] = "tornado3"
+old_cars[joaat("tornado4")] = "tornado4"
+old_cars[joaat("tornado5")] = "tornado5"
+old_cars[joaat("tornado6")] = "tornado6"
+old_cars[joaat("tornado")] = "tornado"
+old_cars[joaat("toro2")] = "toro2"
+old_cars[joaat("toro")] = "toro"
+old_cars[joaat("toros")] = "toros"
+old_cars[joaat("tourbus")] = "tourbus"
+old_cars[joaat("towtruck2")] = "towtruck2"
+old_cars[joaat("towtruck")] = "towtruck"
+old_cars[joaat("toreador")] = "toreador"
+old_cars[joaat("tr2")] = "tr2"
+old_cars[joaat("tr3")] = "tr3"
+old_cars[joaat("tr4")] = "tr4"
+old_cars[joaat("tractor2")] = "tractor2"
+old_cars[joaat("tractor3")] = "tractor3"
+old_cars[joaat("tractor")] = "tractor"
+old_cars[joaat("trailerlarge")] = "trailerlarge"
+old_cars[joaat("trailerlogs")] = "trailerlogs"
+old_cars[joaat("trailers2")] = "trailers2"
+old_cars[joaat("trailers3")] = "trailers3"
+old_cars[joaat("trailers4")] = "trailers4"
+old_cars[joaat("trailers")] = "trailers"
+old_cars[joaat("trailersmall2")] = "trailersmall2"
+old_cars[joaat("trailersmall")] = "trailersmall"
+old_cars[joaat("trash2")] = "trash2"
+old_cars[joaat("trash")] = "trash"
+old_cars[joaat("trflat")] = "trflat"
+old_cars[joaat("tribike2")] = "tribike2"
+old_cars[joaat("tribike3")] = "tribike3"
+old_cars[joaat("tribike")] = "tribike"
+old_cars[joaat("trophytruck2")] = "trophytruck2"
+old_cars[joaat("trophytruck")] = "trophytruck"
+old_cars[joaat("tropic2")] = "tropic2"
+old_cars[joaat("tropic")] = "tropic"
+old_cars[joaat("tropos")] = "tropos"
+old_cars[joaat("tug")] = "tug"
+old_cars[joaat("tula")] = "tula"
+old_cars[joaat("tulip")] = "tulip"
+old_cars[joaat("turismo2")] = "turismo2"
+old_cars[joaat("turismor")] = "turismor"
+old_cars[joaat("tvtrailer")] = "tvtrailer"
+old_cars[joaat("tyrant")] = "tyrant"
+old_cars[joaat("tyrus")] = "tyrus"
+old_cars[joaat("utillitruck2")] = "utillitruck2"
+old_cars[joaat("utillitruck3")] = "utillitruck3"
+old_cars[joaat("utillitruck")] = "utillitruck"
+old_cars[joaat("vacca")] = "vacca"
+old_cars[joaat("vader")] = "vader"
+old_cars[joaat("vagner")] = "vagner"
+old_cars[joaat("vagrant")] = "vagrant"
+old_cars[joaat("valkyrie2")] = "valkyrie2"
+old_cars[joaat("valkyrie")] = "valkyrie"
+old_cars[joaat("vamos")] = "vamos"
+old_cars[joaat("vectre")] = "vectre"
+old_cars[joaat("velum2")] = "velum2"
+old_cars[joaat("velum")] = "velum"
+old_cars[joaat("verlierer2")] = "verlierer2"
+old_cars[joaat("verus")] = "verus"
+old_cars[joaat("vetir")] = "vetir"
+old_cars[joaat("veto")] = "veto"
+old_cars[joaat("veto2")] = "veto2"
+old_cars[joaat("vestra")] = "vestra"
+old_cars[joaat("vigero")] = "vigero"
+old_cars[joaat("vigilante")] = "vigilante"
+old_cars[joaat("vindicator")] = "vindicator"
+old_cars[joaat("virgo2")] = "virgo2"
+old_cars[joaat("virgo3")] = "virgo3"
+old_cars[joaat("virgo")] = "virgo"
+old_cars[joaat("viseris")] = "viseris"
+old_cars[joaat("visione")] = "visione"
+old_cars[joaat("volatol")] = "volatol"
+old_cars[joaat("volatus")] = "volatus"
+old_cars[joaat("voltic2")] = "voltic2"
+old_cars[joaat("voltic")] = "voltic"
+old_cars[joaat("voodoo2")] = "voodoo2"
+old_cars[joaat("voodoo")] = "voodoo"
+old_cars[joaat("vortex")] = "vortex"
+old_cars[joaat("vstr")] = "vstr"
+old_cars[joaat("warrener")] = "warrener"
+old_cars[joaat("washington")] = "washington"
+old_cars[joaat("wastelander")] = "wastelander"
+old_cars[joaat("weevil")] = "weevil"
+old_cars[joaat("windsor2")] = "windsor2"
+old_cars[joaat("windsor")] = "windsor"
+old_cars[joaat("winky")] = "winky"
+old_cars[joaat("wolfsbane")] = "wolfsbane"
+old_cars[joaat("xa21")] = "xa21"
+old_cars[joaat("xls2")] = "xls2"
+old_cars[joaat("xls")] = "xls"
+old_cars[joaat("yosemite2")] = "yosemite2"
+old_cars[joaat("yosemite3")] = "yosemite3"
+old_cars[joaat("yosemite")] = "yosemite"
+old_cars[joaat("youga2")] = "youga2"
+old_cars[joaat("youga3")] = "youga3"
+old_cars[joaat("youga")] = "youga"
+old_cars[joaat("z190")] = "z190"
+old_cars[joaat("zentorno")] = "zentorno"
+old_cars[joaat("zhaba")] = "zhaba"
+old_cars[joaat("zion2")] = "zion2"
+old_cars[joaat("zion3")] = "zion3"
+old_cars[joaat("zion")] = "zion"
+old_cars[joaat("zombiea")] = "zombiea"
+old_cars[joaat("zombieb")] = "zombieb"
+old_cars[joaat("zorrusso")] = "zorrusso"
+old_cars[joaat("zr350")] = "zr350"
+old_cars[joaat("zr3802")] = "zr3802"
+old_cars[joaat("zr3803")] = "zr3803"
+old_cars[joaat("zr380")] = "zr380"
+old_cars[joaat("ztype")] = "ztype"
+
+local old_car_hash= joaat("ZR350")
+
+local VEHICLESPAWNOLDSPAGE = VEHICLESPAGE:add_submenu("Spawn Old cars")
+VEHICLESPAWNOLDSPAGE:add_array_item("Random list", old_cars, function() return old_car_hash end, function(value)
+	old_car_hash = value
+ 	spawner(value)
+end)
+for i = 1, #alphabet do
+    local c = alphabet:sub(i,i)
+     for k,v in pairs(old_cars) do
+       if string.lower(string.sub(v, 1, 1)) == c then
+         VEHICLESPAWNOLDSPAGE:add_action(menu_centered_text(string.toTitleCase(v)), function() 
+ 		   if v == nil then return end
+		   spawner(k)
+         end)
+       end
+    end
+end
 
 local new_cars_map = {} 
 --new_cars_map[joaat("ZR350")] = "Annis ZR350"
 --new_cars_map[joaat("remus")] = "Annis remus"
+new_cars_map[joaat("rhino")] = "rhino Tank"
 new_cars_map[joaat("turismo3")] = "turismo3"
 new_cars_map[joaat("asterope2")] = "asterope2"
 new_cars_map[joaat("vigero3")] = "vigero3"
@@ -752,7 +1544,6 @@ for i = 1, #alphabet do
 end
 
 
-VEHICLESPAGE:add_action("------------------------", function() end)
 VEHICLESPAGE:add_action("------------------------", function() end)
 
 local loop = false
@@ -893,7 +1684,7 @@ UNLOCKREC:add_action("Unlock All Tattoos", unlockAllTattoos)
 UNLOCKREC:add_action("Unlock Snow launcher weapon",function()stats.get_bool(42148,true)end)
 UNLOCKREC:add_action("Get christmas gift 1",function()stats.set_int(262145+36250,1)end)
 UNLOCKREC:add_action("Get christmas gift 2",function()stats.set_int(262145+36251,1)end)
-
+UNLOCKREC:add_action("Unlock Ecola/Sprite vehicle plates", function()stats.set_int("MPPLY_XMAS23_PLATES0", -1)end)
 local SecretAwards = {36068, 36069, 36070, 36071, 36072, 36073, 36074, 36075, 36305, 36306}
 UNLOCKREC:add_action("Unlock secret awards",function()
 	for _, tunable in ipairs(SecretAwards) do
@@ -937,6 +1728,23 @@ local function ResupplyAllBusiness(name, offset)
         globals.set_int(1662873 + i, 1)
 	end
 end
+local SALVAGEYARDBUSINESS = BUSINESSES:add_submenu("Salvage yard")
+SALVAGEYARDBUSINESS:add_action("Remove salvage yard mission cost",function()globals.set_int(262145 + 36063, 0)end)
+SALVAGEYARDBUSINESS:add_int_range("Set 3rd vehicle price", 10000, 0, 1000000, function(val) 
+    return globals.get_int(262145 + 34092 + 3) 
+end, function(val) 
+    globals.set_int(262145 + 34092 + 3, val) 
+end)
+SALVAGEYARDBUSINESS:add_int_range("Set 2nd vehicle price", 10000, 0, 1000000, function(val) 
+    return globals.get_int(262145 + 34092 + 2) 
+end, function(val) 
+    globals.set_int(262145 + 34092 + 2, val) 
+end)
+SALVAGEYARDBUSINESS:add_int_range("Set 1st vehicle price", 10000, 0, 1000000, function(val) 
+    return globals.get_int(262145 + 34092 + 1) 
+end, function(val) 
+    globals.set_int(262145 + 34092 + 1, val) 
+end)
 resupplyBusiness("Counterfit cash",1)  -- Resupply Counterfit cash
 resupplyBusiness("Meth lab",2)  -- Resupply Meth lab
 resupplyBusiness("Forgery documents office",3)  -- Resupply Forgery documents office
@@ -962,7 +1770,6 @@ local function ServerHop()
     setInt(1574589, 1)   -- Trigger session change
     sleep(0.2)    -- Wait for 200 milliseconds
     setInt(1574589, 0)   -- Reset the session change
-
 end
 
 -- Add a menu item to go offline
@@ -1004,6 +1811,11 @@ BUSINESSES:add_action("Resupply Bunker",function()globals.set_int(1662873+6,1)en
 BUSINESSES:add_action("Resupply Acid",function()globals.set_int(1662873+7,1)end)
 PLAYERPAGE:add_toggle("Mobile Radio", function() return MobileRadio end, function() MobileRadio = not MobileRadio menu.set_mobile_radio(MobileRadio) end)
 
+PLAYERPAGE:add_action("Skydive", function()
+    CurrPos = localplayer:get_position()
+	CurrPos.z = CurrPos.z + 1000
+	localplayer:set_position(CurrPos)
+end)
 PLAYERPAGE:add_action("Fill snacks", function()
     local snackStats = { 
         "NO_BOUGHT_YUM_SNACKS", 
@@ -1047,13 +1859,61 @@ end)
 VEHICLESPAGE:add_action("Make cars FLY [WAIT FOR UPDATED MODEST]", function()
     MakeCarsFLY()
 end)
+local RainVehicles = false
+local CurrPos = nil
+
+function RainVehiclesLogic()
+    CurrPos = localplayer:get_position()
+    local radius = 20
+    local numVehicles = 0
+	local currentvehicle = nil
+
+	if localplayer:is_in_vehicle() then
+		currentvehicle = localplayer:get_current_vehicle()
+	end
+	
+    for _ in replayinterface.get_vehicles() do
+        numVehicles = numVehicles + 1
+    end
+	
+    for veh in replayinterface.get_vehicles() do
+		if not currentvehicle or currentvehicle ~= veh then
+			local angle = (numVehicles > 0 and numVehicles - 1 or 0) / numVehicles * 2 * math.pi
+			local xOffset = radius * math.cos(angle)
+			local yOffset = radius * math.sin(angle)
+			CurrPos.z = CurrPos.z + 15
+			veh:set_position(CurrPos.x + xOffset, CurrPos.y + yOffset, CurrPos.z)
+			numVehicles = numVehicles - 1
+		end
+    end
+end
+
+VEHICLESPAGE:add_action("Skydive", function()
+    CurrPos = localplayer:get_position()
+	local currentvehicle = nil
+	CurrPos.z = CurrPos.z + 1000
+	if localplayer:is_in_vehicle() then
+		currentvehicle = localplayer:get_current_vehicle()
+	end
+	if currentvehicle ~= nil then
+		currentvehicle:set_position(CurrPos)
+	end
+end)
+VEHICLESPAGE:add_action("Rain vehicles", function()
+    RainVehiclesLogic()
+end)
+VEHICLESPAGE:add_toggle("Loop Rain vehicles", function() 
+    return RainVehicles
+end, function(value)
+    RainVehicles = value
+	while RainVehicles == true do sleep(0.5) RainVehiclesLogic() end 
+end)
 
 WORLDPAGE:add_toggle("Snow world", function() 
     return globals.get_boolean(262145 + 4575) 
 end, function(value)
     globals.set_int(262145 + 4575, value and 1 or 0)
 end)
-
 
 while TRANSACCERRORBLOCK do
 	globals.set_int(4537356, 0)
