@@ -7,7 +7,7 @@ local TRIGGER_HASH = 0x615762F1
 local maxSnackAmount = 6969
 local MobileRadio = false
 local SnowyWorld = false
-local FemboylaxVERS = "V1.3"
+local FemboylaxVERS = "V1.3.5"
 PiD = stats.get_int("MPPLY_LAST_MP_CHAR") mpx = PiD if PiD == 0 then mpx = "MP0_" else mpx = "MP1_" end 
 
 local IsMale 
@@ -37,26 +37,8 @@ end
     --Added teleport menu
 
 --Features:
-    -- Added God mode feature
-    -- Added Circle cars feature
-    -- Added Circle peds feature
-    -- Added Gender swapping feature
-    -- Added Rain npc feature
-    -- Added Save position feature
-    -- Added Vehicle godmode feature
-    -- Added Kill all vehicles feature
-    -- Added NightVision feature
-    -- Added Passive mode feature
-    -- Added tiny player feature
-    -- Added Unlock All parachutes
-    -- Added Unlock LSC Engine upgrades
-    -- Added more tattoo's in recovery
-    -- Added suicide feature
-    -- Added more unlocks
-    -- Added Heal feature
-    -- Added way more shit just look
---Fixes
-    -- Fixed Unlock recovery
+    -- Added CEO money clutter for office
+    
 
 function rn()
 	local rnndd = math.random(1,60)
@@ -1078,6 +1060,7 @@ MAIN:add_bare_item("",function()return"Current rank: "..globals.get_int(1845263+
 MAIN:add_bare_item("", function() return "------------------------" end, null, null, null)
 local PLAYERPAGE = MAIN:add_submenu("Player")
 local TELEPORTPAGE = MAIN:add_submenu("Teleports")
+local REPORTSPAGE = MAIN:add_submenu("See Reports")
 local SAVEDTELEPORTPAGE = TELEPORTPAGE:add_submenu("Saved positions")
 local BUSINESSES = MAIN:add_submenu("Businesses")
 local VEHICLESPAGE = MAIN:add_submenu("Vehicles")
@@ -1106,6 +1089,40 @@ addTransactionsToSubMenu(TRANSACPAGECASH, transactions)
 
 
 local isFrozenNPCSet = false
+
+local statDefinitions = {
+    { category = "Griefing", key = 'MPPLY_GRIEFING' },
+    { category = "Exploits", key = 'MPPLY_EXPLOITS' },
+    { category = "Bug Exploits", key = 'MPPLY_GAME_EXPLOITS' },
+    { category = "Text Chat: Annoying Me", key = 'MPPLY_VC_ANNOYING_ME' },
+    { category = "Text Chat: Using Hate Speech", key = 'MPPLY_TC_HATE' },
+    { category = "Voice Chat: Annoying Me", key = 'MPPLY_VC_ANNOYINGME' },
+    { category = "Voice Chat: Using Hate Speech", key = 'MPPLY_VC_HATE' },
+    { category = "Offensive Language", key = 'MPPLY_OFFENSIVE_LANGUAGE' },
+    { category = "Offensive Tagplate", key = 'MPPLY_OFFENSIVE_TAGPLATE' },
+    { category = "Offensive Content", key = 'MPPLY_OFFENSIVE_UGC' },
+    { category = "Bad Crew Name", key = 'MPPLY_BAD_CREW_NAME' },
+    { category = "Bad Crew Motto", key = 'MPPLY_BAD_CREW_MOTTO' },
+    { category = "Bad Crew Status", key = 'MPPLY_BAD_CREW_STATUS' },
+    { category = "Bad Crew Emblem", key = 'MPPLY_BAD_CREW_ELBLEM' },
+    { category = "Friendly", key = 'MPPLY_FRIENDLY' },
+    { category = "Helpful", key = 'MPPLY_HELPFUL' },
+}
+local function add_stat_item(statCategory, statKey)
+    local stat = stats.get_int(statKey)
+    if stat == nil then return end
+    REPORTSPAGE:add_bare_item("", 
+        function() return statCategory .. "|" .. (string.format("%03d", stat)) end,
+        function() end, 
+        function() end, 
+        function() return end
+    )
+end
+for _, statDef in ipairs(statDefinitions) do
+    add_stat_item(statDef.category, statDef.key)
+end
+
+
 
 WORLDPAGE:add_toggle("Freeze NPC's", function()
     return isFrozenNPCSet
@@ -2308,6 +2325,27 @@ local CL = coroutine.create(function()
     end
 end)
 
+local function dropmoney()
+    local position = localplayer:get_position()
+    position.z = position.z + 5
+
+    for p in replayinterface.get_peds() do
+        if p and p ~= localplayer and p:get_pedtype() >= 4 and not p:is_in_vehicle() then
+            p:set_position(position)
+
+            if p:get_health() > 99 then
+                p:set_freeze_momentum(true)
+                p:set_health(0)
+                p:set_wallet(2000)
+                break
+            end
+        end
+    end
+end
+
+
+
+
 TRANSACPAGEMONEY:add_action("Add 30M", function() TriggerTransaction(0x176D9D54, 15e6) sleep(0.5) TriggerTransaction(0xA174F633, 15e6) end)
 TRANSACPAGEMONEY:add_action("Add 1M", function() TriggerTransaction(TRIGGER_HASH, 1000000) end)
 TRANSACPAGEMONEY:add_action("Add 750k", function() TriggerTransaction(TRIGGER_HASH, 750000) end)
@@ -2315,6 +2353,7 @@ TRANSACPAGEMONEY:add_action("Add 500k", function() TriggerTransaction(TRIGGER_HA
 TRANSACPAGEMONEY:add_action("Add 250k", function() TriggerTransaction(TRIGGER_HASH, 250000) end)
 TRANSACPAGEMONEY:add_action("Add 100k", function() TriggerTransaction(TRIGGER_HASH, 100000) end)
 TRANSACPAGEMONEY:add_action("Add 50k", function() TriggerTransaction(TRIGGER_HASH, 50000) end)
+TRANSACPAGEMONEY:add_action("Add 2k", function()dropmoney()end)
 
 
 local function addStatIncreaseRange(name, statKey)
@@ -2409,6 +2448,30 @@ end)
 TELEPORTPAGE:add_action("Teleport To Waypoint", function()
     menu.teleport_to_waypoint()
 end)
+TELEPORTPAGE:add_action("Maze bank roof", function()
+    TeleportTopos(-75.015,-818.215,326.176)
+end)
+TELEPORTPAGE:add_action("Paleto Bay Pier", function()
+    TeleportTopos(-275.522 ,6635.835,7.425)
+end)
+TELEPORTPAGE:add_action("Abandon Mine", function()
+    TeleportTopos(-595.342, 2086.008,131.412)
+end)
+TELEPORTPAGE:add_action("Stab city", function()
+    TeleportTopos(126.975 ,3714.419 ,46.827)
+end)
+TELEPORTPAGE:add_action("NOOSE Headquarters", function()
+    TeleportTopos(2535.243 ,-383.799 ,92.993)
+end)
+TELEPORTPAGE:add_action("Strip Club DJ Booth", function()
+    TeleportTopos(126.135 ,-1278.583,29.270)
+end)
+TELEPORTPAGE:add_action("Fort Zancudo ATC entrance", function()
+    TeleportTopos(-2344.373 ,3267.498,32.811)
+end)
+
+
+
 TELEPORTPAGE:add_action("FIB building", function()
     TeleportTopos(160.868, -745.831, 250.063)
 end)
@@ -2551,12 +2614,19 @@ resupplyBusiness("Cocaine lockup",5)  -- Resupply Cocaine lockup
 
 local BUSINESSESSTATS = BUSINESSES:add_submenu("Business stats")
 BUSINESSESSTATS:add_bare_item("", function() return "NightClub safe: " .. globals.get_int(262145 + 24257) end, null, null, null)
+BUSINESSES:add_action("Add CEO office money clutter", function()
+    stats.set_int("LIFETIME_BUY_COMPLETE", 10005)
+    stats.set_int("LIFETIME_BUY_COMPLETE", 10005)
+    stats.set_int("LIFETIME_BUY_COMPLETE", 10005)
+    stats.set_int("LIFETIME_CONTRA_EARNINGS", 25000000)
+end)
 BUSINESSES:add_action("Set max club popularity",function() stats.set_int(mpx .. "CLUB_POPULARITY", 1000)end)
-
 BUSINESSES:add_action("Resupply all businesses", function()
     ResupplyAllBusiness()
 end)
  
+
+
 BUSINESSES:add_action("Resupply Bunker",function()globals.set_int(1662873+6,1)end)
 BUSINESSES:add_action("Resupply Acid",function()globals.set_int(1662873+7,1)end)
 
@@ -2694,6 +2764,15 @@ PLAYERPAGE:add_toggle("Tiny Player", function()
 end, function(value)
 	localplayer:set_config_flag(223, value)
 end)
+PLAYERPAGE:add_toggle("Freeze Player (don't moving)", function()	
+	if localplayer == nil then
+		return nil
+	end
+	return localplayer:get_config_flag(292)
+end, function(value)
+	localplayer:set_config_flag(292, value)
+end)
+
 
 function MakeCarsFLY()
 	for veh in replayinterface.get_vehicles() do
