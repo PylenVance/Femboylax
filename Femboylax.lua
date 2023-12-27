@@ -2,14 +2,12 @@ require_game_build(3095)
 --Credits to gaymer for list  of transactions from op recovery script
 --Credits to silent day for a few globals <3 
 
-
-
 local recovery <const> = 4537212
 local TRIGGER_HASH = 0x615762F1
 local maxSnackAmount = 6969
 local MobileRadio = false
 local SnowyWorld = false
-
+local FemboylaxVERS = "V1.1"
 PiD = stats.get_int("MPPLY_LAST_MP_CHAR") mpx = PiD if PiD == 0 then mpx = "MP0_" else mpx = "MP1_" end 
 
  function MPx()
@@ -29,6 +27,22 @@ function CheckIfPlrExists()
 		return
 	end
 end
+
+--Changelog:
+-- Added off radar Toggle
+-- Added unlock secret Awards
+-- Added vehicle spawner (credits to SCAAPPS)
+-- Added Auto session switch on changing rank
+-- Added more money transactions
+-- Added big map toggle
+-- Fixed Add/Remove bad sports
+-- Fixed Media stick unlocker
+-- Optimized Snow Add/remover
+
+
+--Car spawner by SCAAPPS
+--Link https://github.com/PylenVance/Femboylax/issues/4
+
 
 function UnlockALL()
 		stats.set_int('MPX_AWD_BATSWORD', 1000000)
@@ -427,7 +441,7 @@ function UnlockALL()
 end
 
 local function createStoreMoneyEditor(submenu, character, statName)
-    submenu:add_int_range(character .. "'s Cash", 10000000, 0, 2000000000,
+    submenu:add_int_range(character .. "'s Cash", 100000, 0, 2000000000,
         function()
             return stats.get_int(statName)
         end,
@@ -436,8 +450,8 @@ local function createStoreMoneyEditor(submenu, character, statName)
         end)
 end
 local function setBadsport(isBadsport)
-    stats.set_int("MPPLY_BADSPORT_MESSAGE", isBadsport and -1 or 0)
-    stats.set_int("MPPLY_BECAME_BADSPORT_NUM", isBadsport and -1 or 0)
+	stats.set_int("MPPLY_BADSPORT_MESSAGE", isBadsport and 1 or 0)
+	stats.set_int("MPPLY_BECAME_BADSPORT_NUM", isBadsport and 1 or 0)
     stats.set_float("MPPLY_OVERALL_BADSPORT", isBadsport and 60000 or 0)
     stats.set_bool("MPPLY_CHAR_IS_BADSPORT", isBadsport)
 end
@@ -549,7 +563,7 @@ end
  
 local MAIN = menu.add_submenu("[UwU] Femboylax")
 MAIN:add_bare_item("", function() return "Welcome to Femboylax :3" end, null, null, null)
-MAIN:add_bare_item("", function() return "Femboylax version: " .. "1.0" end, null, null, null)
+MAIN:add_bare_item("", function() return "Femboylax version: " .. FemboylaxVERS end, null, null, null)
 MAIN:add_bare_item("", function() return "Game version: " .. "3095" end, null, null, null)
 MAIN:add_bare_item("",function()return"Current rank: "..globals.get_int(1845263+1+(PlayerID()*877)+205+6)end,null,null,null)
 MAIN:add_bare_item("", function() return "------------------------" end, null, null, null)
@@ -578,6 +592,168 @@ createStoreMoneyEditor(STORYMODEPAGE, "Franklin", "SP1_TOTAL_CASH")
 createStoreMoneyEditor(STORYMODEPAGE, "Trevor", "SP2_TOTAL_CASH")
 
 addTransactionsToSubMenu(TRANSACPAGECASH, transactions)
+
+function int_get_set(a,b)
+	local i=globals.get_int(a) 
+	if b and b~=i then 
+		globals.set_int(a,b)
+	end
+	return i
+ end
+function checkintansleep(a,b,c,d)
+	for a=1,10*a do a=int_get_set(b)
+		if d and a~=c or not d and a==c then
+			return 
+		else
+			sleep(0.1)
+		end
+	end 
+ end
+function pvhandle()
+	return 1586608+142*int_get_set(2359980)
+end
+function spawnPersonalCar(x)
+	if x then
+		local i1 = int_get_set(pvhandle())
+		local i2 = int_get_set(2359980)
+		local i3 = int_get_set(2640103)
+		if int_get_set(2738886)~=-1 then 
+			int_get_set(pvhandle(),4) checkintansleep(5,2738886,-1)
+		end 
+		int_get_set(2359980,x) end 
+		int_get_set(pvhandle(),5)
+		checkintansleep(5,2738886,-1,0)
+		int_get_set(2640103,1)
+end
+VEHICLESPAGE:add_action("------------------------", function() end)
+VEHICLESPAGE:add_int_range("Get personal vehicle",1,0,400,function() return int_get_set(2359980) end,spawnPersonalCar)
+
+local drift_cars = {}
+
+drift_cars[joaat("drifttampa")] = "Drift Tampa" -- -1696319096
+drift_cars[joaat("driftyosemite")] = "Drift Yosemite" -- -1681653521
+drift_cars[joaat("drifteuros")] = "Drift Euros" -- 821121576
+drift_cars[joaat("driftfr36")] = "Drift FR36" -- -1479935577
+drift_cars[joaat("driftfuto")] = "Drift Futo GTX" -- -181562642
+drift_cars[joaat("driftjester")] = "Drift Jester RR" -- -1763273939
+drift_cars[joaat("driftremus")] = "Drift Annis Remus" -- -1624083468
+drift_cars[joaat("driftzr350")] = "Drift Annis ZR350" -- 1923534526
+
+local global_unlock_map = {}
+global_unlock_map[joaat("baller8")] = 36301
+global_unlock_map[joaat("cavalcade")] = 36295
+global_unlock_map[joaat("dorado")] = 36300
+global_unlock_map[joaat("polgauntlet")] = 36297
+global_unlock_map[joaat("impaler5")] = 36296
+global_unlock_map[joaat("terminus")] = 36302
+
+local drift_cars_hash= joaat("driftfuto")
+
+local vint = 2640095
+local intplus = 1
+function spawner(car_hash)
+    if localplayer == nil then return end
+	
+		--REST AND UNLOAD THE PERSONAL VEHICLE OTHERWISE IT WONT SPAWN CARS
+		local pppp = int_get_set(pvhandle())
+		if pppp ~= -1 then
+			int_get_set(pvhandle(), 0)
+			int_get_set(pvhandle(), -1)
+		    int_get_set(2359980,0)	
+		    int_get_set(2640103,0)
+		    sleep(2)
+	    end 
+	    if global_unlock_map[car_hash] then
+		   local global_unlock = global_unlock_map[car_hash]
+		   globals.set_int(262145 + global_unlock, 1)
+	    end
+        local pos = localplayer:get_position()
+        local heading = localplayer:get_heading()
+        pos.x = pos.x + heading.x * 5
+        pos.y = pos.y + heading.y * 5
+		
+		globals.set_int(vint + 47, car_hash)
+		globals.set_float(vint + 43, pos.x)
+		globals.set_float(vint + 44, pos.y)
+		globals.set_float(vint + 45, pos.z)
+		globals.set_boolean(vint + 42, true)
+	
+end
+
+local alphabet = string.lower('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+function string.toTitleCase(str) return string.gsub(" "..str, "%W%l", string.upper):sub(2) end
+function menu_centered_text(str)
+    local len = 30 - math.floor(string.len(str) / 2 + 0.5)
+    local text = ""
+    for i = 0, len do
+        text = text.." "
+    end
+    return text..str
+end
+
+
+local VEHICLESPAWNDRIFTSPAGE = VEHICLESPAGE:add_submenu("Spawn All Driftable cars")
+VEHICLESPAWNDRIFTSPAGE:add_array_item("Random Drift", drift_cars, function() return drift_cars_hash end, function(value)
+	drift_cars_hash = value
+ 	spawner(value)
+end)
+for i = 1, #alphabet do
+    local c = alphabet:sub(i,i)
+     for k,v in pairs(drift_cars) do
+       if string.lower(string.sub(v, 1, 1)) == c then
+         VEHICLESPAWNDRIFTSPAGE:add_action(menu_centered_text(string.toTitleCase(v)), function() 
+ 		   if v == nil then return end
+		   spawner(k)
+         end)
+       end
+    end
+end
+
+local new_cars_map = {} 
+--new_cars_map[joaat("ZR350")] = "Annis ZR350"
+--new_cars_map[joaat("remus")] = "Annis remus"
+new_cars_map[joaat("turismo3")] = "turismo3"
+new_cars_map[joaat("asterope2")] = "asterope2"
+new_cars_map[joaat("vigero3")] = "vigero3"
+new_cars_map[joaat("impaler6")] = "impaler6"
+new_cars_map[joaat("fr36")] = "fr36"
+new_cars_map[joaat("vivanite")] = "vivanite"
+new_cars_map[joaat("aleutian")] = "aleutian"
+new_cars_map[joaat("dominator9")] = "dominator9"
+new_cars_map[joaat("riot")] = "police riot"
+new_cars_map[joaat("police5")] = "LE Cruiser"
+new_cars_map[joaat("police4")] = "unmarked personal police car"
+new_cars_map[joaat("baller8")] = "baller8"
+new_cars_map[joaat("benson2")] = "benson2"
+new_cars_map[joaat("boxville6")] = "boxville6"
+new_cars_map[joaat("cavalcade3")] = "cavalcade3"
+new_cars_map[joaat("dorado")] = "dorado"
+new_cars_map[joaat("polgauntlet")] = "polgauntlet"
+new_cars_map[joaat("impaler5")] = "impaler5"
+new_cars_map[joaat("terminus")] = "terminus"
+
+local new_cars_hash= joaat("ZR350")
+
+local VEHICLESPAWNNEWSPAGE = VEHICLESPAGE:add_submenu("Spawn All new cars")
+VEHICLESPAWNNEWSPAGE:add_array_item("Random list", new_cars_map, function() return new_cars_hash end, function(value)
+	new_cars_hash = value
+ 	spawner(value)
+end)
+for i = 1, #alphabet do
+    local c = alphabet:sub(i,i)
+     for k,v in pairs(new_cars_map) do
+       if string.lower(string.sub(v, 1, 1)) == c then
+         VEHICLESPAWNNEWSPAGE:add_action(menu_centered_text(string.toTitleCase(v)), function() 
+ 		   if v == nil then return end
+		   spawner(k)
+         end)
+       end
+    end
+end
+
+
+VEHICLESPAGE:add_action("------------------------", function() end)
+VEHICLESPAGE:add_action("------------------------", function() end)
 
 local loop = false
 local CasinoChipsloop = false
@@ -634,8 +810,12 @@ end)
 
 TRANSACPAGEMONEY:add_action("Add 30M", function() TriggerTransaction(0x176D9D54, 15e6) sleep(0.5) TriggerTransaction(0xA174F633, 15e6) end)
 TRANSACPAGEMONEY:add_action("Add 1M", function() TriggerTransaction(TRIGGER_HASH, 1000000) end)
+TRANSACPAGEMONEY:add_action("Add 750k", function() TriggerTransaction(TRIGGER_HASH, 750000) end)
 TRANSACPAGEMONEY:add_action("Add 500k", function() TriggerTransaction(TRIGGER_HASH, 500000) end)
+TRANSACPAGEMONEY:add_action("Add 250k", function() TriggerTransaction(TRIGGER_HASH, 250000) end)
+TRANSACPAGEMONEY:add_action("Add 100k", function() TriggerTransaction(TRIGGER_HASH, 100000) end)
 TRANSACPAGEMONEY:add_action("Add 50k", function() TriggerTransaction(TRIGGER_HASH, 50000) end)
+
 
 local function addStatIncreaseRange(name, statKey)
 	local function mpx()
@@ -699,7 +879,11 @@ addUnlockAction("Moodymann/NEZ Music", unlockRecords, {
     { stat = "TUNERPSTAT_BOOL0", index = 6 },
     { stat = "TUNERPSTAT_BOOL0", index = 7 }
 })
-addUnlockAction("Dr. Dre Media Stick", stats.set_bool_masked, {
+--Fix issued on github
+local function _set_bool_masked(val)
+	stats.set_bool_masked(val.stat, val.value, val.mask) 
+end
+addUnlockAction("Dr. Dre Media Stick", _set_bool_masked, {
     stat = MPx() .. "FIXERPSTAT_BOOL0",
     value = true,
     mask = 4
@@ -710,11 +894,23 @@ UNLOCKREC:add_action("Unlock Snow launcher weapon",function()stats.get_bool(4214
 UNLOCKREC:add_action("Get christmas gift 1",function()stats.set_int(262145+36250,1)end)
 UNLOCKREC:add_action("Get christmas gift 2",function()stats.set_int(262145+36251,1)end)
 
+local SecretAwards = {36068, 36069, 36070, 36071, 36072, 36073, 36074, 36075, 36305, 36306}
+UNLOCKREC:add_action("Unlock secret awards",function()
+	for _, tunable in ipairs(SecretAwards) do
+		stats.set_int(262145 + tunable, 1)
+	end
+end)
+
+
+local autoSessionHopOnRankChanged = false
 local function setRank(value)
     local calculatedValue = calculateValue(value)
     stats.set_int(mpx .. "CHAR_SET_RP_GIFT_ADMIN", calculatedValue + 100)
+    if autoSessionHopOnRankChanged then ServerHop() end
 end
+
 RANKREC:add_bare_item("", function() return "[!] JOIN NEW SESSION TO APPLY RANK CHANGES" end, null, null, null)
+RANKREC:add_toggle("Auto apply rank",function()return autoSessionHopOnRankChanged end,function(val)autoSessionHopOnRankChanged=val end)
 RANKREC:add_int_range("Set Rank", 1, 0, 8000, function() return stats.get_int(mpx .. "CHAR_RANK_FM_SA") end, setRank)
 RANKREC:add_action("Rank 50", function() setRank(50) end)
 RANKREC:add_action("Rank 100", function() setRank(100) end)
@@ -781,6 +977,23 @@ end)
 PLAYERPAGE:add_action("Remove Badsport", function()
     setBadsport(false)
 end)
+PLAYERPAGE:add_action("Skip cutscene", function()
+    menu.end_cutscene()
+end)
+local PlrBigMap = false
+local PlrOFFRADAR = false
+PLAYERPAGE:add_toggle("Off radar",
+    function() return PlrOFFRADAR end,
+    function(val)
+        PlrOFFRADAR = val
+        menu.set_offradar(PlrOFFRADAR)
+end)
+PLAYERPAGE:add_toggle("Bigger map",
+    function() return PlrBigMap end,
+    function(val)
+        PlrBigMap = val
+        menu.set_big_map(PlrBigMap)
+end)
 
 TRANSACCERRORBLOCK=false
 PLAYERPAGE:add_toggle("Remove transaction errors",function()return TRANSACCERRORBLOCK end,function(val)TRANSACCERRORBLOCK=val end)
@@ -824,17 +1037,23 @@ function MakeCarsFLY()
 		veh:set_gravity(-5)
 	end
 end
+VEHICLESPAGE:add_action("Kill engine", function()
+    vehicle:set_health(0)
+end)
+VEHICLESPAGE:add_action("Revive engine", function()
+    vehicle:set_health(1000)
+end)
 
 VEHICLESPAGE:add_action("Make cars FLY [WAIT FOR UPDATED MODEST]", function()
     MakeCarsFLY()
 end)
 
-WORLDPAGE:add_toggle("Snow world",
-    function() return SnowyWorld end,
-    function(value)
-        SnowyWorld = value
-        globals.set_int(262145 + 4575, SnowyWorld and 1 or 0)
+WORLDPAGE:add_toggle("Snow world", function() 
+    return globals.get_boolean(262145 + 4575) 
+end, function(value)
+    globals.set_int(262145 + 4575, value and 1 or 0)
 end)
+
 
 while TRANSACCERRORBLOCK do
 	globals.set_int(4537356, 0)
