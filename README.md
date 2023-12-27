@@ -22,13 +22,29 @@ Access:
 + Visit FemboyLax in kiddions external menu by placing it inside the scripts folder.
 
 
-Changelog:
-+ Added off radar Toggle
-+ Added unlock secret Awards
-+ Added vehicle spawner (credits to SCAAPPS)
-+ Added Auto session switch on changing rank
-+ Added more money transactions
-+ Added big map toggle
-+ Fixed Add/Remove bad sports
-+ Fixed Media stick unlocker
-+ Optimized Snow Add/remover
+--Changelog:
+
+--Menu's:
+    --Added teleport menu
+
+--Features:
+    -- Added God mode feature
+    -- Added Circle cars feature
+    -- Added Circle peds feature
+    -- Added Gender swapping feature
+    -- Added Rain npc feature
+    -- Added Save position feature
+    -- Added Vehicle godmode feature
+    -- Added Kill all vehicles feature
+    -- Added NightVision feature
+    -- Added Passive mode feature
+    -- Added tiny player feature
+    -- Added Unlock All parachutes
+    -- Added Unlock LSC Engine upgrades
+    -- Added more tattoo's in recovery
+    -- Added suicide feature
+    -- Added more unlocks
+    -- Added Heal feature
+    -- Added way more shit just look
+--Fixes
+    -- Fixed Unlock recovery
